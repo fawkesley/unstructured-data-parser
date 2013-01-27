@@ -1,6 +1,14 @@
 #!/usr/bin/python
-import unittest
 
+""""
+Unit tests live in here to ensure that our regular expressions and postfilter
+are matching correctly. These should be kept up to date as new tags are added.
+
+To run the unit tests:
+    $ python tests.py
+"""
+
+import unittest
 from extract import extract_tags
 
 class ExtractIpv4Test(unittest.TestCase):
@@ -107,3 +115,4 @@ class ExtractHostnameTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
