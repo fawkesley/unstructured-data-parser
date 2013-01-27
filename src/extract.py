@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
 """
-Parses a file to extract a tag which matches a predefined regular expression.
+Parses a file to extract a tag which matches a predefined regular expression,
+described in tags.py
+
 Example module usage:
 
   from extract import get_valid_tags, extract_tags, extract_tags_from_file
@@ -10,29 +12,16 @@ Example module usage:
   extract_tags('email', 'This string contains test@test.com tag data')
 """
 
-_TAG_FORMATS = {
-        'ipv4'     : (
-            r'((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(?![\d])'),
-        'ipv6'     : r'',
-        'url'      : r'(?:http|https)(?::\/{2}[\w]+)(?:[\/|\.]?)(?:[^\s"]*)',
-        # see postfilter_hostname and postfilter_domain
-        'hostname' : r'(?:http|https)(?::\/{2}[\w]+)(?:[\/|\.]?)(?:[^\s"]*)',
-        'domain'   : r'(?:http|https)(?::\/{2}[\w]+)(?:[\/|\.]?)(?:[^\s"]*)',
-        'md5'      : r'\b[a-f\d]{32}\b',
-        'sha1'     : r'\b[a-f\d]{40}\b',
-        'sha256'   : r'\b[a-f\d]{64}\b',
-        'email'    : r'[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}',
-        }
-
 import sys
 import re
 import time
 from lib.rfc3339 import rfc3339
 from lib.domain_name import DomainName, InvalidUrlError
 
+import tags
+
 class UnknownTagError(Exception):
     pass
-
 
 def main():
     """
@@ -69,14 +58,14 @@ def usage():
 
 def get_valid_tags():
     "Returns a list of strings for all supported tags."
-    return _TAG_FORMATS.keys()
+    return tags.TAG_FORMATS.keys()
 
 def extract_from_file(tag, filename):
     "Opens a file, reads its content and calls extract_tags"
     f = open(filename, 'r')
-    tags = extract_tags(tag, f.read())
+    matching_tags = extract_tags(tag, f.read())
     f.close()
-    return tags
+    return matching_tags
 
 def extract_tags(tag, text):
     """
@@ -97,46 +86,17 @@ def apply_postfilter(tag, values):
     extraction.
     """
     try:
-        func = globals()["postfilter_%s" % tag]
+        func = getattr(tags, "postfilter_%s" % tag)
         return filter(None, map(func, values))
-    except KeyError:
+    except AttributeError:
         return values
-
-def postfilter_hostname(url):
-    """
-    The 'hostname' regular expression catches an entire http URL. We use the
-    DomainName class to extract the whole domain.
-
-    >>> postfilter_hostname('http://sub1.google.com/foo/bar')
-    'sub1.google.com'
-    """
-    try:
-        d = DomainName(url)
-        return d.full_domain_name()
-    except InvalidUrlError:
-        return None
-
-def postfilter_domain(url):
-    """
-    The 'domain' regular expression catches an entire http URL. We use the
-    DomainName class to extract the root domain.
-
-    >>> postfilter_domain('http://sub1.google.com/foo/bar')
-    'google.com'
-    """
-    try:
-        d = DomainName(url)
-        return d.root_domain()
-    except InvalidUrlError:
-        return None
-
 
 def get_re_object(tag):
     "Compiles the regular expression object for the tag"
-    if tag not in _TAG_FORMATS:
+    if tag not in tags.TAG_FORMATS:
         raise UnknownTagError("Unknown tag '%s', valid tags are: %s" % (
             tag, ','.join(get_valid_tags())))
-    return re.compile(_TAG_FORMATS[tag], re.IGNORECASE)  
+    return re.compile(tags.TAG_FORMATS[tag], re.IGNORECASE)  
 
 
 if __name__ == '__main__':
