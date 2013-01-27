@@ -1,0 +1,2391 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:og="http://ogp.me/ns#">
+<head>
+
+<title>Gauss: Abnormal Distribution - Securelist</title>
+
+<link rel="alternate" type="application/rss+xml" title="Securelist / Analysis" href="rss/analysis">
+<META name="description" content="While analyzing the Flame malware that we detected in May 2012,  Kaspersky Lab experts identified some distinguishing features of Flame's modules. ">
+<base href="http://www.securelist.com/en/">
+
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="securelist.com"/>
+<meta property="og:url" content="http://www.securelist.com/en/analysis/204792238/Gauss_Abnormal_Distribution"/>
+	<meta property="og:image" content="http://www.securelist.com/en/images/vlavatar/4/5/0f22a64f9498b7866afc9cb4437328"/>
+	<meta property="og:image" content="http://www.securelist.com/en/images/vlanalysis/sl_internal_infowatch_intro.jpg"/>
+	<meta property="og:image" content="http://www.securelist.com/en/images/vlicons/pdf_small.gif"/>
+	<meta property="og:image" content="http://www.securelist.com/en/images/vlill/great2012_pic01s.png"/>
+	<meta property="og:image" content="http://www.securelist.com/en/images/vlill/great2012_pic02.png"/>
+	<meta property="og:image" content="http://www.securelist.com/en/images/vlill/great2012_pic03.png"/>
+	<meta property="og:image" content="http://www.securelist.com/en/images/vlill/great2012_pic04s.png"/>
+	<meta property="og:image" content="http://www.securelist.com/en/images/vlill/great2012_pic05.png"/>
+	<meta property="og:image" content="http://www.securelist.com/en/images/newdesign3/logo_secur.gif"/>
+
+<meta property="og:title" content="Gauss: Abnormal Distribution"/>
+<meta property="og:description" content="While analyzing the Flame malware that we detected in May 2012,  Kaspersky Lab experts identified some distinguishing features of Flame's modules. "/>
+<meta property="fb:admins" content="100001061185903"/>
+
+<link rel="stylesheet" type="text/css" href="css_inside_all.css"/>
+
+
+</head>
+
+<!-- en design version -->
+<body>
+
+<script type="text/javascript"><!--
+var cur_balloon = '';
+var isvis = false;
+function Balloon_Off(){
+	if(isvis){ isvis = false; return; }
+	var Balloon = cur_balloon ? document.getElementById(cur_balloon) : '';
+	if (Balloon) { Balloon.style.display = 'none' ; document.onclick = null ; cur_balloon = '';  }
+}
+function Balloon_On(bid){
+	Balloon_Off();
+	var Balloon = document.getElementById(bid);
+	if (!Balloon) return;
+	cur_balloon = bid;
+	Balloon.style.display = '';
+//	setTimeout("document.onclick = Balloon_Off;", 500);
+	isvis = true;
+	document.onclick = Balloon_Off;
+	Balloon.onclick = new Function("isvis=true");
+	return false;
+}
+//--></script>
+
+<div KLMark="vlyrub:7">
+
+	<a name="page_top"></a>
+	
+	<!-- content - white bg -->
+	<div class="mrga"><div class="mrga mWidthB cc_bg"><div class="pd5"><div class="mWidth">
+
+		<!-- topline -->
+		<div class="tl_l"><div class="tl_r"><div class="tl_c">
+
+			<!-- select lang -->
+			<div class="fl lang">
+
+<div class="sel" onclick="Balloon_On('lang_list2')" style="width:100px"><div><div>
+English
+</div></div></div>
+
+<!-- hide div - lang list -->
+<div class="rel"><div id="lang_list2" class="abs" style="display:none;top:-32px;left:-7px">
+
+<div id="fsel_w1">
+	<div class="ctop"></div>
+	<!-- div class="cntr"--><!-- errors for ie -->
+	<table class="w100"><tr><td class="cntr">
+		<div class="fl w50"><div class="pdl24">
+	<b>English</b><br/>
+	<a href="http://www.securelist.com/ru/" onclick="_gaq.push(['_link', 'http://www.securelist.com/ru/']); return false;">Russian</a><br/>
+	<a href="http://www.viruslist.com/de/" onclick="_gaq.push(['_link', 'http://www.viruslist.com/de/']); return false;">German</a><br/>
+		</div></div>
+		<div class="fl w50"><div class="pdl12 pdr12">
+	<a href="http://www.viruslist.com/fr/" onclick="_gaq.push(['_link', 'http://www.viruslist.com/fr/']); return false;">French</a><br/>
+	<a href="http://www.viruslist.com/sp/" onclick="_gaq.push(['_link', 'http://www.viruslist.com/sp/']); return false;">Spanish</a><br/>
+	<a href="http://www.viruslist.pl/" onclick="_gaq.push(['_link', 'http://www.viruslist.pl/']); return false;">Polish</a><br/>
+		</div></div>
+		<div class="cl"></div>
+	</td></tr></table>
+	<!--/div-->
+	<div class="cbtm"></div>
+</div>
+
+</div></div>
+
+
+</div>
+			<!-- top menu -->
+			<div class="fl topmenu" style="padding:3px 0 0 164px">
+
+<div id="ServiceMenu">
+<a href="calendar">Calendar</a><a href="discussions">Discussions</a><a href="polls">Polls</a><a href="feeds"><img src="images/newdesign3/rss_small.gif" width=14 height=14 alt='' class="m" style="margin-right:4px"><span class="m">RSS feeds</span></a><a href="subscriptions">Subscriptions</a><a href="contacts">Contacts</a></div>
+
+
+</div>
+			<!-- login form -->
+			<div class="fl" style="padding-top:3px">
+
+
+<div class="topmenu"><a href="login" class="dashed" onclick="return Balloon_On('LoginForm')" KLMark="loc_msg:vl2logintop">Log in</a></div>
+
+<div class="rel"><div id="LoginForm" class="abs" style="display:none;left:-162px;top:-7px">
+	<div id="fsel_w1">
+		<div class="ctop"></div>
+		<!-- div class="cntr"--><!-- errors for ie -->
+		<table class="w100"><tr><td class="cntr" style="padding-left:18px;padding-right:18px;">
+
+<form action="login" method="post">
+<span KLMark="loc_msg:vl2login">Log-in</span><br/>
+<p><input type="text" maxlength=30 name="LOGIN" id="LOGIN" value="" class="w100"></p>
+<span KLMark="loc_msg:vl2pass">Password</span><br/>
+<p><input type="password" name="PASSWD" value="" class="w100"></p>
+<p><input type="checkbox" name="SAVE" class="mrr8"><span KLMark="loc_msg:vl2save">Remember me</span></p>
+<p><input type="submit" name="accept" KLMark="loc_msg:vl2accept" value="Log In" class="btn_gr"/></p>
+<br/>
+<p><a href="profile" KLMark="loc_msg:vl2register" class="under">Register</a></p>
+<p><a href="profile/password_recovery" class="under" KLMark="loc_msg:vl2recovery">Forgotten your password?</a></p>
+</form>
+		
+		</td></tr></table>
+		<!--/div-->
+		<div class="cbtm"></div>
+	</div>
+</div></div>
+
+
+</div>
+			<!-- search form -->
+			<div class="fr search" style="padding-top:3px">
+
+
+<img src="images/newdesign3/ssearch.gif" width="14px" height="16px" class="mrr8" alt=""/><span class="topmenu"><a href="javascript:void(0);" class="dashed" onclick="return Balloon_On('searchForm2');" KLMark="loc_msg:vl2searchtop">Search</a></span>
+
+<div class="rel"><div id="searchForm2" class="abs" style="display:none;left:-130px;top:-8px">
+	<div id="fsel_w1">
+		<div class="ctop"></div>
+		<!-- div class="cntr"--><!-- errors for ie -->
+		<table class="w100"><tr><td class="cntr" style="padding-left:18px;padding-right:18px">
+
+<form action="find" onsubmit="return document.getElementById('TopFind').value.length ? true : false">
+<p><input type="text" ID="TopFind" accesskey="f" name="words" value="" class="w100"/></p>
+<p KLMark="loc_msg:vl2everywhere">
+<select class="w100" name="searchtype">
+	<option name="searchtype" value=""  selected>- whole site -</option>
+	<option name="searchtype" value="virus2" >descriptions</option>
+	<option name="searchtype" value="vlpubl" >analysis</option>
+	<option name="searchtype" value="klblog" >blog</option>
+	<option name="searchtype" value="vlgloss" >glossary</option>
+</select>
+</p>
+<span KLMark="loc_msg:vl2search_butt"><input type="submit" value="Search" class="btn_gr"/></span>
+</form>
+
+		</td></tr></table>
+		<!--/div-->
+		<div class="cbtm"></div>
+	</div>
+</div></div>
+
+
+
+</div>
+							
+			<div class="cl"></div>
+
+		</div></div></div>
+</div></div></div></div>
+
+	<!-- content - white bg -->
+	<div class="mrga"><div class="mrga mWidthB cc_bg"><div class="pd5"><div class="mWidth">
+
+		<!-- logo-line -->
+		<div class="logoline">
+			<div class="fl logo"><a href="http://www.securelist.com/en/"><img src="images/newdesign3/logo_secur.gif" width="132px" height="28px" alt="Securelist - Information about Viruses, Hackers and Spam"/></a></div>
+			<div class="fl alert">
+
+<span KLMark="loc_msg:alert_title1"><img src="images/newdesign3/alerticon_1.jpg" alt='The Internet threat alert status is currently normal. At present, no major epidemics or other serious incidents have been recorded by Kaspersky Lab&#8217;s monitoring service.' title='The Internet threat alert status is currently normal. At present, no major epidemics or other serious incidents have been recorded by Kaspersky Lab&#8217;s monitoring service.' class="m mrr8" /></span>
+<span class="m" KLMark="loc_msg:threat_level" title='The Internet threat alert status is currently normal. At present, no major epidemics or other serious incidents have been recorded by Kaspersky Lab&#8217;s monitoring service.' class="m mrr8" >Internet threat level: 1</span>
+
+
+</div>
+
+			<div class="fr" KLMark="loc_msg:promo_top_rotation"><span KLMark="vlxhtml:101"><div class="follow cur" onclick="window.location='http://www.youtube.com/securelist'"><div class="c" style="padding:10px 16px"><span>Watch us on</span><img src="images/newdesign3/youtube_logo.png"/></div></div></span></div>
+			<div class="cl"></div>
+		</div>
+					
+		<!-- main menu -->
+		
+
+<div class="mmenu">
+<div class="part"><div class="first"><div><p><a href="threats">Threats</a></p></div></div></div>
+<div class="part act"><div class=""><div><p><a href="analysis">Analysis</a></p></div></div></div>
+<div class="part"><div class=""><div><p><a href="blog">Blog</a></p></div></div></div>
+<div class="part"><div class=""><div><p><a href="statistics">Statistics</a></p></div></div></div>
+<div class="part"><div class=""><div><p><a href="descriptions">Descriptions</a></p></div></div></div>
+<div class="part"><div class="last"><div><p><a href="glossary">Glossary</a></p></div></div></div>
+<div class="cl"></div>
+</div>
+
+
+
+
+
+	</div></div></div></div>
+
+		<!-- navigation line -->
+
+<div class="mrga"><div class="mrga mWidthB nav">
+	<div class="cgr_l"><div class="cgr_r">
+		<p><a href="http://www.securelist.com/en/" KLMark="loc_msg:vl2home">Home</a><span>&#8594;</span><a href="analysis" KLMark="vlyrub:7">Analysis</a><span>&#8594;</span><a href="analysis?calendar=2012-08" KLMark="vlpubl:204792238">09 Aug 2012</a><span>&#8594;</span>Gauss: Abnormal Distribution</p>
+	</div></div>
+</div></div>
+
+
+
+
+		<!-- promo-blocks -->
+	
+
+
+	<!-- padding -->
+	<div class="rz"></div>
+	
+	<!-- top corner -->
+	<div class="mrga"><div class="mrga mWidthB cc_top"></div></div>
+
+	<!-- content - white bg -->
+	<div class="mrga"><div class="mrga mWidthB cc_bg cont_"><div class="pd41"><div class="mWidthPd">
+
+		<!-- padd -->
+		<div class="h1px" style="height:8px"></div>
+
+	
+
+
+<!-- for print - output author-info -->
+
+<!-- left content -->
+<div class="fl lWidth2">
+
+<h1>Gauss: Abnormal Distribution</h1>
+
+<div class="mCont"><style type='text/css'>
+.color{padding: 5px 5px 5px 20px; background: #d9f9f3; border:solid 1px #05493c;}
+.shrift {color:green;}
+.sb {color:blue;}
+TH {
+background:#066150;
+border: 1px solid wite;
+color: white;
+
+}
+</style>
+
+<ul>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#1">Introduction</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#2">Executive Summary</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#3">Infection stats</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#4">Architecture</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#5">Wmiqry32/Wmihlp32.dll aka ShellHW</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#6">Dskapi.ocx</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#7">Smdk.ocx</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#8">McDmn.ocx</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#9">Lanhlp32.ocx</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#10">Devwiz.ocx</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#11">Winshell.ocx</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#12">Windig.ocx</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#13">Gauss C&C Information</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#14">Timeline</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#15">Files list</a>
+<li><a href="analysis/204792238/Gauss_Abnormal_Distribution#16">Conclusion</a>
+</ul>
+
+<div class="quote"><p><a href="downloads/vlpdfs/kaspersky-lab-gauss.pdf"><img src="images/vlicons/pdf_small.gif" border=0 width=28 height=28 alt='' align=absmiddle></a>&nbsp;&nbsp;&nbsp;You can download PDF version of this article <a href="downloads/vlpdfs/kaspersky-lab-gauss.pdf">here</a>.</p></div>
+
+<h2><a name="1"></a>Introduction</h2>
+<p>While analyzing the Flame malware that we detected in May 2012,  Kaspersky Lab experts identified some distinguishing features of Flame's modules. Based on those features, we discovered that in 2009, the first variant of the Stuxnet worm included a module that was created based on the Flame platform. This indicates that there was some form of collaboration between the groups that developed the Flame and Tilded (Stuxnet/Duqu) platforms.</p>
+
+<p>Based on the results of a detailed analysis of Flame, we continued to actively search for new, unknown components. A more in-depth analysis conducted in June 2012 resulted in the discovery of a new, previously unknown malware platform that uses a modular structure resembling that of Flame, a similar code base and system for communicating to C&C servers, as well as numerous other similarities to Flame.</p>
+
+<p>In our opinion, all of this clearly indicates that the new platform which we discovered and which we called 'Gauss,'  is another example of a cyber-espionage toolkit based on the Flame platform.</p>
+
+<p>Gauss is a project developed in 2011-2012 along the same lines as the Flame project. The malware has been actively distributed in the Middle East for at least the past 10 months. The largest number of Gauss infections has been recorded in Lebanon, in contrast to Flame, which spread primarily in Iran.</p>
+<p>Functionally, Gauss is designed to collect as much information about infected systems as possible, as well as to steal credentials for various banking systems and social network, email and IM accounts. The Gauss code includes commands to intercept data required to work with several Lebanese banks - for instance, Bank of Beirut, Byblos Bank, and Fransabank.</p>
+
+<p>Curiously, several Gauss modules are named after famous mathematicians. The platform includes modules that go by the names 'Gauss', 'Lagrange', 'Godel', 'Tailor', 'Kurt' (in an apparent reference to Godel). The Gauss module is responsible for collecting the most critical information, which is why we decided to name the entire toolkit after it.</p>
+
+<p>Gauss is a much more widespread threat than Flame. However, we have found no self-replication functionality in the modules that we have seen to date, which leaves open the question of its original attack vector.</p>
+
+ <h2><a name="2"></a>Executive Summary</h2>
+
+<p>The first known Gauss infections date back to September-October 2011. During that period, the Gauss authors modified different modules multiple times. They also changed command server addresses. In the middle of July 2012, when we had already discovered Gauss and were studying it, the command servers went offline.</p>
+<p>Gauss is designed to collect information and send the data collected to its command-and-control servers. Information is collected using various modules, each of which has its own unique functionality:</p>
+<ul>
+<li>Injecting its own modules into different browsers in order to intercept user sessions and steal passwords, cookies and browser history.
+<li>Collecting information about the computer's network connections.
+<li>Collecting information about processes and folders.
+<li>Collecting information about BIOS, CMOS RAM.
+<li>Collecting information about local, network and removable drives.
+<li>Infecting USB drives with a spy module in order to steal information from other computers.
+<li>Installing the custom Palida Narrow font (purpose unknown).
+<li>Ensuring the entire toolkit's loading and operation.
+<li>Interacting with the command and control server, sending the information collected to it, downloading additional modules.
+</ul>
+<p>The spy module that works on USB drives uses an .LNK exploit for the  <a href='http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-2568' target=_blank>CVE-2010-2568</a> vulnerability. The exploit is similar to the one used in the Stuxnet worm, but it is more effective. The module masks the Trojan's files on the USB drive without using a driver. It does not infect the system: information is extracted from it using a spy module (32- or 64-bit) and saved on the USB drive.</p>
+
+<h2><a name="3"></a>Infection stats</h2>
+<p>
+We began our investigation into Gauss in early June 2012. Based on data obtained through the Kaspersky Security Network, we noticed right away that the Trojan appeared to be widely distributed in three particular countries in the Middle East.</p>
+<p>Further observation later confirmed this three-country concentration. As of 31 July 2012, we've counted around 2500 unique PCs on which files from the Gauss collection have been found.</p>
+<p class=c><a href="images/vlill/great2012_pic01.png" target=_blank><img src="images/vlill/great2012_pic01s.png"  border=0 alt='' style="margin-bottom:15px;"> &nbsp;<img src='images/vlill/enlarge.gif' border=0 ></a> <br><span class=small><strong> Most infected countries
+</strong></span> </p>      
+<p>The highest number of infections is recorded in Lebanon, with more than 1600 computers affected. The Gauss code (winshell.ocx) contains direct commands to intercept data required to work with Lebanese banks - including the Bank of Beirut, Byblos Bank and Fransabank. </p>
+<p>In Israel and the Palestinian Territory, 750 incidents have been recorded.</p>
+
+<div align=center>                                                      
+<table width=50% class=fullbrd border=0>                                                        
+<tr>    <th>    Country </th>   <th>    Unique users    </th>   </tr>
+<tr>    <td>    Lebanon </td>   <td class="c">  1660    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Israel  </td>   <td class="c">  483     </td>   </tr>
+<tr>    <td>    Palestinian Territory   </td>   <td class="c">  261     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    United States   </td>   <td class="c">  43      </td>   </tr>
+<tr>    <td>    United Arab Emirates    </td>   <td class="c">  11      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Germany </td>   <td class="c">  5       </td>   </tr>
+<tr>    <td>    Egypt   </td>   <td class="c">  4       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Qatar   </td>   <td class="c">  4       </td>   </tr>
+<tr>    <td>    Jordan  </td>   <td class="c">  4       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Saudi Arabia    </td>   <td class="c">  4       </td>   </tr>
+<tr>    <td>    Syria   </td>   <td class="c">  4       </td>   </tr>
+</table>        </div><br>                                              
+      
+
+<p class=c><span class=small><strong> Top 10 infected countries</strong></span> </p> 
+                                                            
+
+<p>As can be seen in the above table, with the exceptions of the USA and Germany, all incidents took place in the Middle East. However, we believe that in the majority of cases linked to the USA and Germany the affected users were actually in the Middle East too - using VPNs (or the Tor anonymity network).</p>
+<p>In all, we've recorded incidents in 25 countries around the world; however, in all the countries outside the top 10 only one or two incidents have been recorded:</p>
+
+
+<p class=c><img src="images/vlill/great2012_pic02.png" border=0 alt='' style="margin-bottom:15px;"> <br><span class=small><strong> Total infected users</strong></span> </p>      
+
+<p>Regarding the spreading mechanism used by Gauss, the obtained data leave us with more questions unanswered than solved. The overall number of infections (around 2500) that we've detected could in reality just be a small portion of tens of thousands of infections, since our statistics only cover users of Kaspersky Lab products.</p>
+<p>When we compare the number of Gauss infections with those of other programs discovered earlier that have either common components or structures, we get the following figures:</p>
+                                                                                                           
+
+                                <div align=center>                                                                              
+<table width=60% class=fullbrd border=0>                                                                                
+<tr>    <th>    Name    </th>   <th>    Incidents (KL stats)    </th>   <th>    Incidents (approx.)     </th>   </tr>
+<tr>    <td>    Stuxnet </td>   <td>    More than 100 000       </td>   <td>    More than 300 000       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Gauss   </td>   <td>    ~ 2500  </td>   <td>    ?       </td>   </tr>
+<tr>    <td>    Flame   </td>   <td>    ~ 700   </td>   <td>    ~5000-6000      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Duqu    </td>   <td>    ~20     </td>   <td>    ~50-60  </td>   </tr>
+</table>        </div><br>                                                                      
+                                                                     
+
+
+
+ <p>Gauss has been spreading in the region for at least 10 months, in the course of which it has infected thousands of systems. On  one hand, this is an uncharacteristically high number for targeted attacks similar to Duqu (it's possible that such a high number of incidents is due to the presence of a worm in one of the Gauss modules that we still don't know about). However, the infections have been predominantly within the boundaries of a rather small geographical region. If the malware had the ability to spread indiscriminately - for example, on USB sticks as was the case with Stuxnet - infections would have been detected in much greater numbers in other countries.</p>
+
+<h3>Operating System Statistics</h3>
+
+<p>Gauss was designed for 32-bit versions of the Windows operating system. Some of the modules do not work under Windows 7 SP1.  </p>
+                                                                                       
+
+                                <div align=center>                                                      
+<table width=50% class=fullbrd border=0>                                                        
+<tr>    <th>    OS      </th>   <th>    % from total    </th>   </tr>
+<tr>    <td>    Windows 7       </td>   <td class="c">  34,87   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    XP Professional SP2     </td>   <td class="c">  26,40   </td>   </tr>
+<tr>    <td>    XP Professional SP3     </td>   <td class="c">  17,92   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Windows 7 SP1   </td>   <td class="c">  10,77   </td>   </tr>
+<tr>    <td>    Windows 7 Home  </td>   <td class="c">  2,15    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Vista Home SP1  </td>   <td class="c">  1,71    </td>   </tr>
+<tr>    <td>    Vista Home      </td>   <td class="c">  1,22    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Windows 7 Home SP1      </td>   <td class="c">  0,88    </td>   </tr>
+<tr>    <td>    Vista Home SP2  </td>   <td class="c">  0,83    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Vista   </td>   <td class="c">  0,64    </td>   </tr>
+<tr>    <td>    Vista SP2       </td>   <td class="c">  0,39    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    XP Home Edition </td>   <td class="c">  0,39    </td>   </tr>
+<tr>    <td>    Vista SP1       </td>   <td class="c">  0,34    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Other   </td>   <td class="c">  1,47    </td>   </tr>
+</table>        </div><br>                                              
+                                                                     
+
+
+<p>There is a separate spy module that operates on USB drives (see description of dskapi.ocx) and is designed to collect information from 64-bit systems.</p>
+<h2><a name="4"></a>Architecture</h2>
+
+<p>Gauss is a modular system. The number and combination of modules may change from one infected system to another. In the course of our research, we discovered the following modules:</p>
+
+                                                                                                                
+
+                               <div align=center>                                                                               
+<table width=80% class=fullbrd border=0>                                                                                
+<tr>    <th>    Module name     </th>   <th>    Location        </th>   <th>    Description     </th>   </tr>
+<tr>    <td>    Cosmos  </td>   <td>    %system32%\devwiz.ocx   </td>   <td>    Collects information about CMOS, BIOS   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Kurt, Godel     </td>   <td>    %system32%\dskapi.ocx   </td>   <td>    Infects USB drives with data-stealing module    </td>   </tr>
+<tr>    <td>    Tailor  </td>   <td>    %system32%\lanhlp32.ocx </td>   <td>    Collects information about network interfaces   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    McDomain        </td>   <td>    %system32%\mcdmn.ocx    </td>   <td>    Collects information about user's domain        </td>   </tr>
+<tr>    <td>    UsbDir  </td>   <td>    %system32%\smdk.ocx     </td>   <td>    Collects information about computer's drives    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Lagrange        </td>   <td>    %system32%\windig.ocx   </td>   <td>    Installs a custom 'Palida Narrow' font  </td>   </tr>
+<tr>    <td>    Gauss   </td>   <td>    %system32%\winshell.ocx </td>   <td>    Installs browser plugins that collect passwords and cookies     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    ShellHW </td>   <td>    "%system32%\wbem\wmiqry32.ocx<br>
+%system32%\wbem\wmihlp32.ocx
+"       </td>   <td>    Main loader and communication module    </td>   </tr>
+</table>        </div><br>                                                                      
+                                                                   
+
+
+
+   <p>The configuration of a specific combination of modules for each system is described in a special registry key. This technique, as well as the configuration structure itself, is similar to that used in Stuxnet/Duqu (storing of the configuration in the Windows registry) and Flame (configuration structure). Flame stores its configuration in the main module (mssecmgr.ocx).</p>
+
+<p>We created a special detection routine which helped us to discover various Gauss configurations based on registry settings on infected machines. We detected about 1700 such configurations in total, which revealed a picture of modules propagation:</p>
+                                                                                                             
+
+                               <div align=center>                                                       
+<table width=50% class=fullbrd border=0>                                                        
+<tr>    <th>    Module  </th>   <th>    "Number of PC with the module
+(defined in config) 
+"       </th>   </tr>
+<tr>    <td>    UsbDir  </td>   <td class="c">  1655    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Godel   </td>   <td class="c">  1220    </td>   </tr>
+<tr>    <td>    Gauss   </td>   <td class="c">  858     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Gauss_1.1       </td>   <td class="c">  510     </td>   </tr>
+<tr>    <td>    Kurt (aka Godel)        </td>   <td class="c">  433     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Gauss 1.0.8     </td>   <td class="c">  318     </td>   </tr>
+<tr>    <td>    Tailor  </td>   <td class="c">  28      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    McDomain 1.2    </td>   <td class="c">  5       </td>   </tr>
+<tr>    <td>    Cosmos  </td>   <td class="c">  5       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Lagrange        </td>   <td class="c">  3       </td>   </tr>
+</table>        </div><br>                                              
+                                             
+
+
+
+    <p>You can see three main modules, which are used in most cases - Gauss, Godel and UsbDir.
+Some examples of different configs:
+</p>
+<p class=c><img src="images/vlill/great2012_pic03.png" border=0 alt='' style="margin-bottom:15px;"> <br><span class=small><strong> </strong></span> </p>      
+
+<p>As mentioned above, we have been unable to discover the original infection vector and the dropper file that installs Gauss in the system. In all the systems we have studied, we dealt with a set of modules that was already installed. It is possible that during initial infection, only the ShellHW component is installed, which then installs the other modules. </p>
+
+
+<p class=c><a href="images/vlill/great2012_pic04.png" target=_blank><img src="images/vlill/great2012_pic04s.png" border=0 alt='' style="margin-bottom:15px;"> &nbsp;<img src='images/vlill/enlarge.gif' border=0 ></a> <br><span class=small><strong> </strong></span> </p>      
+
+<p>ShellHW (file name 'wmiqry32.dll'/'wmihlp32.dll') is the main component of the malware which ensures that all other Gauss modules are loaded when the malware starts and operate correctly.
+</p>
+<h3>Comparison with Flame</h3>
+<p>As we mentioned above, there are significant similarities in code and architecture between Gauss and Flame. In fact, it is largely due to these similarities that Gauss was discovered. We created the following table for a clearer understanding of these facts and proof of 'kinship' between the two  attack platforms:</p>
+                                                                                                            
+
+                                <div align=center>                                                                              
+<table width=80% class=fullbrd border=0>                                                                                
+<tr>    <th>    Feature </th>   <th>    Flame   </th>   <th>    Gauss   </th>   </tr>
+<tr>    <td>    Modular architecture    </td>   <td>    Yes     </td>   <td>    Yes     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Using kernel drivers    </td>   <td>    No      </td>   <td>    No      </td>   </tr>
+<tr>    <td>    .OCX files extensions   </td>   <td>    Yes     </td>   <td>    Yes     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Configuration settings  </td>   <td>    Predefined in main body </td>   <td>    Stored in registry      </td>   </tr>
+<tr>    <td>    DLL injections  </td>   <td>    Yes     </td>   <td>    Yes     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Visual C++      </td>   <td>    Yes     </td>   <td>    Yes     </td>   </tr>
+<tr>    <td>    Encryption methods      </td>   <td>    XOR     </td>   <td>    XOR     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Using USB as storage    </td>   <td>    Yes (hub001.dat)        </td>   <td>    Yes (.thumbs.db)        </td>   </tr>
+<tr>    <td>    Embedded LUA scripting  </td>   <td>    Yes     </td>   <td>    No      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Browser history/cookies stealer </td>   <td>    Yes (soapr32/nteps32)   </td>   <td>    Yes (winshell)  </td>   </tr>
+<tr>    <td>    CVE2010-2568 (.LNK exploit)     </td>   <td>    Yes (target.lnk)        </td>   <td>    Yes (target.lnk)        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    C&C communication       </td>   <td>    https   </td>   <td>    https   </td>   </tr>
+<tr>    <td>    Log files/stolen data stored in %temp%  </td>   <td>    Yes     </td>   <td>    Yes     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Zlib compression of collected data      </td>   <td>    Yes     </td>   <td>    Yes     </td>   </tr>
+</table>        </div><br>                                                                      
+                                                                   
+
+<p>In addition to the features listed above, there are considerable similarities in the operation of the Flame and Gauss C&C servers. The relevant analysis is provided in the C&C Communication section. </p>
+<p>There are more similarities in the code and data of the modules:</p>
+<ul>
+<li>C++ runtime type information (RTTI) structures are encoded to hide the names of the standard library classes. The same encoded names can be found in both Flame and Gauss modules, i.e. the first RTTI structure contains a name 'AVnxsys_uwip' that most likely belongs to the 'AVtype_info' class.<br>
+
+<p class=c><img src="images/vlill/great2012_pic05.png" border=0 alt='' style="margin-bottom:15px;"> <br><span class=small><strong> </strong></span> </p>      
+
+<li>Most of Flame and Gauss modules contain  dozens of object initialization functions that construct string objects from encrypted data. The layout of these functions is almost identical.<br>
+
+<p class=c><a href="images/vlill/great2012_pic06.png" target=_blank><img src="images/vlill/great2012_pic06s.png" border=0 alt='' style="margin-bottom:15px;"> &nbsp;<img src='images/vlill/enlarge.gif' border=0 ></a> <br><span class=small><strong> </strong></span> </p>      
+
+<li>String decryption routines ('GetDecryptedStrings' used in initialization functions) are very similar, although not identical, because the layout of the structures holding encrypted strings was changed.<br>
+
+
+
+<p class=c><a href="images/vlill/great2012_pic07.png" target=_blank><img src="images/vlill/great2012_pic07s.png" border=0 alt='' style="margin-bottom:15px;"> &nbsp;<img src='images/vlill/enlarge.gif' border=0 ></a> <br><span class=small><strong> </strong></span> </p>      
+
+</ul>
+<h2><a name="5"></a>Wmiqry32/Wmihlp32.dll aka ShellHW</h2>
+<p>Installed by: Unknown dropper</p>
+<p>Operates in two modes: installation and normal operation.</p>
+
+                                                                                        
+
+                                <div align=center>                                                      
+<table width=70% class=fullbrd border=0>                                                        
+<tr>    <th>    File names      </th>   <th>    "%system32%\wbem\wmiqry32.dll<br>
+%system32%\wbem\wmihlp32.dll
+"       </th>   </tr>
+<tr>    <td>    Some known MD5  </td>   <td>    "C3B8AD4ECA93114947C777B19D3C6059
+08D7DDB11E16B86544E0C3E677A60E10 
+055AE6B8070DF0B3521D78E1B8D2FCE4 
+FA54A8D31E1434539FBB9A412F4D32FF 
+01567CA73862056304BB87CBF797B899 
+23D956C297C67D94F591FCB574D9325F"       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Image Size      </td>   <td>    258 048 bytes   </td>   </tr>
+<tr>    <td>    Number of resources     </td>   <td>    7       </td>   </tr>
+<tr>    <td>    Resources       </td>   <td>    121, 131, 141, 151, 161, 171, 181       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Date of compilation     </td>   <td>    "Jun  1 2011<br>
+Jul 16 2011<br>
+Jul 18 2011<br>
+Sep 28 2011<br>
+Oct 20 2011
+"       </td>   </tr>
+<tr>    <td>    Related files   </td>   <td>    "%temp%\~shw.tmp<br>
+%temp%\~stm.tmp
+"       </td>   </tr>
+</table>        </div><br>                                              
+                                           
+
+<h3>Installation</h3>
+<p>The module checks if it was loaded by 'lsass.exe' process and, if true, proceeds with the installation. </p>
+
+<p>It writes itself in files: %system32%\wbem\wmiqry32.dll, %system32%\wbem\wmihlp32.dll and modifies the system registry to be loaded instead of %system32%\wbem\wbemsvc.dll file. 
+</p>
+<p>To achieve this, it writes the following registry value: </p>
+<p class="shrift"> [HKCR\CLSID\{7C857801-7381-11CF-884D-00AA004B2E24}\InProcServer32]<br>
+Default = %system32%\wbem\wmihlp32.dll</p>
+
+<h3>Operation </h3>
+<p>The module is automatically loaded into processes that use wbemsvc.dll. When loaded in 'svchost.exe' that was started with '-k netsvc' parameter, it starts its main thread.
+</p>
+<p>The module creates 'ShellHWStop', 'Global\ShellHWDetectionEvent' events, mutex 'ShellHWDetectionMutex'.<br>
+The main thread exits if the following processes were found at its start: 
+</p>
+
+
+                                <table align=center class=fullbrd>                                                                                                      
+<tr style="background:#f0f0f0;">        <td>    LMon.exe        </td>   <td>    sagui.exe       </td>   <td>    RDTask.exe      </td>   <td>    kpf4gui.exe     </td>   </tr>
+<tr>    <td>    ALsvc.exe       </td>   <td>    pxagent.exe     </td>   <td>    fsma32.exe      </td>   <td>    licwiz.exe      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    SavService.exe  </td>   <td>    prevxcsi.exe    </td>   <td>    alertwall.exe   </td>   <td>    livehelp.exe    </td>   </tr>
+<tr>    <td>    SAVAdminService.exe     </td>   <td>    csi-eui.exe     </td>   <td>    mpf.exe </td>   <td>    lookout.exe     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    savprogress.exe </td>   <td>    lpfw.exe        </td>   <td>    mpfcm.exe       </td>   <td>    emlproui.exe    </td>   </tr>
+<tr>    <td>    savmain.exe     </td>   <td>    outpost.exe     </td>   <td>    fameh32.exe     </td>   <td>    emlproxy.exe    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    savcleanup.exe  </td>   <td>    filemon.exe     </td>   <td>    AntiHook.exe    </td>   <td>    endtaskpro.exe  </td>   </tr>
+<tr>    <td>    savcli.exe      </td>   <td>    procmon.exe     </td>   <td>    xfilter.exe     </td>   <td>    netguardlite.exe        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    backgroundscanclient.exe        </td>   <td>    Sniffer.exe     </td>   <td>    scfservice.exe  </td>   <td>    oasclnt.exe     </td>   </tr>
+<tr>    <td>    sdcservice.exe  </td>   <td>    acs.exe </td>   <td>    scfmanager.exe  </td>   <td>    omnitray.exe    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    sdcdevconx.exe  </td>   <td>    aupdrun.exe     </td>   <td>    spywaretermin<br>atorshield.exe </td>   <td>    onlinent.exe    </td>   </tr>
+<tr>    <td>    sdcdevconIA.exe </td>   <td>    sppfw.exe       </td>   <td>    spywat~1.exe    </td>   <td>    opf.exe </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    sdcdevcon.exe   </td>   <td>    spfirewallsvc.exe       </td>   <td>    ssupdate.exe    </td>   <td>    pctavsvc.exe    </td>   </tr>
+<tr>    <td>    configuresav.exe        </td>   <td>    fwsrv.exe       </td>   <td>    terminet.exe    </td>   <td>    pctav.exe       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    alupdate.exe    </td>   <td>    opfsvc.exe      </td>   <td>    tscutynt.exe    </td>   <td>    pcviper.exe     </td>   </tr>
+<tr>    <td>    InstLsp.exe     </td>   <td>    uwcdsvr.exe     </td>   <td>    umxtray.exe     </td>   <td>    persfw.exe      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    CMain.exe       </td>   <td>    dfw.exe </td>   <td>    updclient.exe   </td>   <td>    pgaccount.exe   </td>   </tr>
+<tr>    <td>    CavAUD.exe      </td>   <td>    ipatrol.exe     </td>   <td>    webwall.exe     </td>   <td>    privatefirewall3.exe    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    CavEmSrv.exe    </td>   <td>    pcipprev.exe    </td>   <td>    winroute.exe    </td>   <td>    protect.exe     </td>   </tr>
+<tr>    <td>    Cavmr.exe       </td>   <td>    prifw.exe       </td>   <td>    apvxdwin.exe    </td>   <td>    rtt_crc_service.exe     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Cavvl.exe       </td>   <td>    tzpfw.exe       </td>   <td>    as3pf.exe       </td>   <td>    schedulerdaemon.exe     </td>   </tr>
+<tr>    <td>    CavApp.exe      </td>   <td>    privatefirewall3.exe    </td>   <td>    avas.exe        </td>   <td>    sdtrayapp.exe   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    CavCons.exe     </td>   <td>    pfft.exe        </td>   <td>    avcom.exe       </td>   <td>    siteadv.exe     </td>   </tr>
+<tr>    <td>    CavMud.exe      </td>   <td>    armorwall.exe   </td>   <td>    avkproxy.exe    </td>   <td>    sndsrvc.exe     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    CavUMAS.exe     </td>   <td>    app_firewall.exe        </td>   <td>    avkservice.exe  </td>   <td>    snsmcon.exe     </td>   </tr>
+<tr>    <td>    UUpd.exe        </td>   <td>    blackd.exe      </td>   <td>    avktray.exe     </td>   <td>    snsupd.exe      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    cavasm.exe      </td>   <td>    blackice.exe    </td>   <td>    avkwctrl.exe    </td>   <td>    procguard.exe   </td>   </tr>
+<tr>    <td>    CavSub.exe      </td>   <td>    umxagent.exe    </td>   <td>    avmgma.exe      </td>   <td>    DCSUserProt.exe </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    CavUserUpd.exe  </td>   <td>    kpf4ss.exe      </td>   <td>    avtask.exe      </td>   <td>    avkwctl.exe     </td>   </tr>
+<tr>    <td>    CavQ.exe        </td>   <td>    tppfdmn.exe     </td>   <td>    aws.exe </td>   <td>    firewall.exe    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Cavoar.exe      </td>   <td>    blinksvc.exe    </td>   <td>    bgctl.exe       </td>   <td>    THGuard.exe     </td>   </tr>
+<tr>    <td>    CEmRep.exe      </td>   <td>    sp_rsser.exe    </td>   <td>    bgnt.exe        </td>   <td>    spybotsd.exe    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    OnAccessInstaller.exe   </td>   <td>    op_mon.exe      </td>   <td>    bootsafe.exe    </td>   <td>    xauth_service.exe       </td>   </tr>
+<tr>    <td>    SoftAct.exe     </td>   <td>    cmdagent.exe    </td>   <td>    bullguard.exe   </td>   <td>    xfilter.exe     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    CavSn.exe       </td>   <td>    VCATCH.EXE      </td>   <td>    cdas2.exe       </td>   <td>    zlh.exe </td>   </tr>
+<tr>    <td>    Packetizer.exe  </td>   <td>    SpyHunter3.exe  </td>   <td>    cmgrdian.exe    </td>   <td>    adoronsfirewall.exe     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Packetyzer.exe  </td>   <td>    wwasher.exe     </td>   <td>    configmgr.exe   </td>   <td>    scfservice.exe  </td>   </tr>
+<tr>    <td>    zanda.exe       </td>   <td>    authfw.exe      </td>   <td>    cpd.exe </td>   <td>    scfmanager.exe  </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    zerospywarele.exe       </td>   <td>    dvpapi.exe      </td>   <td>    espwatch.exe    </td>   <td>    dltray.exe      </td>   </tr>
+<tr>    <td>    zerospywarelite_installer.exe   </td>   <td>    clamd.exe       </td>   <td>    fgui.exe        </td>   <td>    dlservice.exe   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Wireshark.exe   </td>   <td>    sab_wab.exe     </td>   <td>    filedeleter.exe </td>   <td>    ashwebsv.exe    </td>   </tr>
+<tr>    <td>    tshark.exe      </td>   <td>    SUPERAntiSpyware.exe    </td>   <td>    firewall.exe    </td>   <td>    ashdisp.exe     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    rawshark.exe    </td>   <td>    vdtask.exe      </td>   <td>    firewall2004.exe        </td>   <td>    ashmaisv.exe    </td>   </tr>
+<tr>    <td>    Ethereal.exe    </td>   <td>    asr.exe </td>   <td>    firewallgui.exe </td>   <td>    ashserv.exe     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Tethereal.exe   </td>   <td>    NetguardLite.exe        </td>   <td>    gateway.exe     </td>   <td>    aswupdsv.exe    </td>   </tr>
+<tr>    <td>    Windump.exe     </td>   <td>    nstzerospywarelite.exe  </td>   <td>    hpf_.exe        </td>   <td>    avastui.exe     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Tcpdump.exe     </td>   <td>    cdinstx.exe     </td>   <td>    iface.exe       </td>   <td>    avastsvc.exe    </td>   </tr>
+<tr>    <td>    Netcap.exe      </td>   <td>    cdas17.exe      </td>   <td>    invent.exe      </td>   <td>            </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Netmon.exe      </td>   <td>    fsrt.exe        </td>   <td>    ipcserver.exe   </td>   <td>            </td>   </tr>
+<tr>    <td>    CV.exe  </td>   <td>    VSDesktop.exe   </td>   <td>    ipctray.exe     </td>   <td>            </td>   </tr>
+</table><br>                                                                                                    
+                                                                                                   
+<p>The module reads the registry value 'SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability' 'TimeStampForUI'. It is an encrypted configuration file. The configuration file contains the list of additional modules, their names, DLL exports names to call and location of the modules' additional files.</p>
+
+<p class=c><a href="images/vlill/great2012_pic08.png" target=_blank><img src="images/vlill/great2012_pic08s.png" border=0 alt='' style="margin-bottom:15px;"> &nbsp;<img src='images/vlill/enlarge.gif' border=0 ></a> <br><span class=small><strong> </strong></span> </p>      
+
+
+<div class="color"><pre><font color="black"><b>Gauss</b>
+ShellNotifyUser
+ShellNotifyUserEx
+SetWindowEvent
+InitShellEx
+%systemroot%\system32\winshell.ocx
+%temp%\ws1bin.dat
+<b>Godel</b>
+InitCache
+RevertCache
+ValidateEntry
+CreateEntry
+%windir%\system32\dskapi.ocx
+%temp%\~gdl.tmp
+<b>UsbDir</b>
+InitCache
+RevertCache
+ValidateEntry
+CreateEntry
+%windir%\system32\smdk.ocx
+%temp%\~mdk.tmp </font></pre></div></br>
+<p class="c"><span class=small><strong> String values from config file (example) </strong></span> </p>      
+
+<p>Every module is loaded and its export functions are called as specified in the configuration.
+Most of the actions are logged in an encrypted (with XOR) file '%temp%\~shw.tmp'.
+</p>
+
+
+<p class=c><img src="images/vlill/great2012_pic09.png" border=0 alt='' style="margin-bottom:15px;"> <br><span class=small><strong> Sample of decrypted '~shw.tmp' </strong></span> </p>      
+
+<p>After loading additional modules, it tries to acquire the same privileges as 'explorer.exe' and then starts its C&C interaction loop.</p>
+
+<p>Prior to communicating with the C&C, all the information from the other modules' log files is copied to the ~shw.tmp file. Paths to the log files are taken from the TimeStampForUI configuration file.</p>
+<p>As a result, at this stage ~shw.tmp becomes a universal container file containing all the stolen data.</p>
+
+
+<p>It checks Internet connection (https) by accessing URLs specified in its resource 161.</p>
+
+<p class=c><img src="images/vlill/great2012_pic10.png" border=0 alt='' style="margin-bottom:15px;"><br><span class=small><strong> </strong></span> </p>      
+
+<p>It then checks an https connection with www.google.com or www.update.windows.com. If '200 OK' is received in reply, it sends a request with the proxy server parameters taken from the prefs.js file of the Mozilla Firefox browser. </p>
+<p>When an Internet connection is available, it connects to its C&C servers that are specified in resource 131:</p>
+
+<p class=c><img src="images/vlill/great2012_pic11.png" border=0 alt='' style="margin-bottom:15px;"> <br><span class=small><strong> </strong></span> </p>      
+
+<p>Connection is established using WinInet API and is performed in two stages: </p>
+<ol>
+<li>GET request to the server. The response from the server is expected to contain new modules, commands or configuration data.
+<pre>GET [C&C domain]/userhome.php?sid=[random  string]==&uid=VfHx8fHx8fHx8fHx8fHx8fHx8fE=</pre>
+<li>POST request to the server with the contents of the file '~shw.tmp' that contains all data collected from the infected computer.
+<p></ol>
+
+The response from the server is decrypted using XOR and 0xACDC as the key. Exfiltrated data is compressed with Zlib.</p>
+<p>The C&C connection routine is controlled by a DWORD value that is read from the registry value:
+</p>
+
+<p class="shrift">[HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability]
+ShutdownIntervalSnapshotUI</p>
+
+<p>The initial value of the counter is read from resource 181 and is equal to 56. The counter is decremented every time the module fails to connect to its C&C server or to the servers specified in resource 161 and it is reset to the initial value after every successful connection to the C&C server. The module exits the C&C connection loop when the value of the counter becomes equal to zero.</p>
+
+
+
+
+
+
+                                <div align=center>                                                      
+<table width=80% class=fullbrd border=0>                                                        
+<tr>    <th>    Resource        </th>   <th>    Description     </th>   </tr>
+<tr>    <td>    121     </td>   <td>    3 DWORDs, related to list of AVs        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    131     </td>   <td>    Hostnames and URLs of C&C servers       </td>   </tr>
+<tr>    <td>    141     </td>   <td>    List of AVs, firewalls, etc.    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    151     </td>   <td>    Additional configuration DWORDs </td>   </tr>
+<tr>    <td>    161     </td>   <td>    Hostnames and URLs of legitimate sites to check Internet connection     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    171     </td>   <td>    String with cryptic identifiers </td>   </tr>
+<tr>    <td>    181     </td>   <td>    DWORD, number of attempts to connect to the C&C before giving up        </td>   </tr>
+</table>        </div><br>                                              
+                                              
+
+
+<div class="color"><pre><font color="black">File Version:    2001.12.4414.320
+Product Version: 5.1.2600.5788
+File OS:         WINDOWS32
+File Type:       DLL
+File SubType:    UNKNOWN
+Language/Code Page: 1033/1200
+CompanyName:        Microsoft Corporation
+FileDescription:    WMI COM Helper
+FileVersion:        2001.12.4414.320
+LegalCopyright:     Copyright (C) Microsoft Corp. 1995-1999
+LegalTrademarks:    Microsoft(R) is a registered trademark of Microsoft <br>Corporation. Windows(TM) is a trademark of Microsoft Corporation
+ProductName:        WMI COM Services Help
+ProductVersion:     05.01.2600.5788</font></pre></div></br>
+<p class="c"><span class=small><strong> Version info 'wmiqry32.dll'</strong></span> </p>      
+
+<h2><a name="6"></a>Dskapi.ocx</h2>
+
+<p>Name of the module used in Gauss: 'Godel' or 'Kurt'.</p>
+
+
+
+                                <div align=center>                                                      
+<table width=70% class=fullbrd border=0>                                                        
+<tr>    <th>    File names      </th>   <th>    %system32%\dskapi.ocx   </th>   </tr>
+<tr>    <td>    Some known MD5  </td>   <td>    "ED5559B0C554055380D75C1D7F9C4424 
+E379270F53BA148D333134011AA3600C 
+EF83394D9600F6D2808E0E99B5F932CA"       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Image Size      </td>   <td>    "1 327 104 bytes<br>
+954 368 bytes<br>
+962 560 bytes<br>
+417 792 bytes
+"       </td>   </tr>
+<tr>    <td>    Number of resources     </td>   <td>    2       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Resources       </td>   <td>    100, 101        </td>   </tr>
+<tr>    <td>    Date of compilation     </td>   <td>    "28.09.2011<br>
+13.10.2011<br>
+01.11.2011<br>
+29.11.2011
+"       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Related files   </td>   <td>    "%temp%\~gdl.tmp<br>
+.thumbs.db<br>
+wabdat.dat<br>
+desktop.ini<br>
+target.lnk<br>
+System32.dat<br>
+System32.bin<br>
+.CatRoot.tmp
+"       </td>   </tr>
+</table>        </div><br>                                              
+                                                                    
+
+<p>Creates events: '{12258790-A76B}', 'Global\RasSrvReady'</p>
+<p>All functionality is implemented in 'RevertCache' export. The module starts its main thread and then returns. The main thread waits for the '{12258790-A76B}' event and continuously checks for the presence of anti-malware software.</p>
+<p>'ValidateEntry' signals the '{12258790-A76B}' event, allowing for the main thread to work for 3 seconds before terminating it.</p>
+<p>Writes log file: %temp%\~gdl.tmp</p>
+<p>The log file entries are compressed with Zlib.</p>
+<p>Reads registry key HKLM\SYSTEM\CurrentControlSet\Services\Disk\Enum
+Checks for running anti-malware products by names and exits if they are present: </p>
+
+<div class="small"><p>
+        AVKProxy.exe</p>
+<p>
+        AVKService.exe</p>
+<p>
+        AVKTray.exe</p>
+<p>
+        AVKWCtl.exe</p>
+<p>
+        GDFirewallTray.exe</p>
+<p>
+        GDFwSvc.exe</p>
+<p>
+        GDScan.exe</p>
+<p>
+        abcd.exe</p>
+<p>
+        avp.exe</p>
+<p>
+        fameh32.exe</p>
+<p>
+        fch32.exe</p>
+<p>
+        fsar32.exe</p>
+<p>
+        fsav32.exe</p>
+<p>
+        fsdfwd.exe</p>
+<p>
+        fsgk32.exe</p>
+<p>
+        fsgk32st.exe</p>
+<p>
+        fsguidll.exe</p>
+<p>
+        fshdll32.exe</p>
+<p>
+        fsm32.exe</p>
+<p>
+        fsma32.exe</p>
+<p>
+        fsmb32.exe</p>
+<p>
+        fsorsp.exe</p>
+<p>
+        fspc.exe</p>
+<p>
+        fsqh.exe</p>
+<p>
+        fssm32.exe</p>
+<p>
+        fsus.exe</p>
+<p>
+        gsava.exe</p>
+<p>
+        gssm32.exe</p>
+<p>
+        vsmon.exe</p>
+<p>
+        zapro.exe</p>
+<p>
+        zlclient.exe</p>
+</div>
+<p>It also exits if started on Windows 7 SP 1.</p>
+<p>By querying disk enum in registry, it also tries to identify whether the storage is USB-connected or not by searching 'USBSTOR' string in their information.</p>
+<p>When a drive contains '.thumbs.db' file, its contents are read and checked for the valid magic number 0xEB397F2B. If it matches, the module creates %commonprogramfiles%\system\wabdat.dat and writes the data to this file, and then deletes '.thumbs.db'. 
+</p>
+<p>Then, it infects the USB drives by creating directories with the names .Backup0[D-M] and .Backup00[D-M]</p>
+
+
+
+<p class=c><img src="images/vlill/great2012_pic12.png" border=0 alt='' style="margin-bottom:15px;"> <br><span class=small><strong> Infected USB root folder (before activation)</strong></span> </p>      
+
+<p>Each directory contains a specially crafted desktop.ini file and target.lnk file that exploits the LNK vulnerability.</p>
+<p class=c><a href="images/vlill/great2012_pic13.png" target=_blank><img src="images/vlill/great2012_pic13s.png" border=0 alt='' style="margin-bottom:15px;"> &nbsp;<img src='images/vlill/enlarge.gif' border=0 ></a> <br><span class=small><strong> target.lnk
+</strong></span> </p>      
+
+<div class="color">[.ShellClassInfo]<br>
+CLSID = {0AFACED1-E828-11D1-9187-B532F1E9575D}<br>
+CLSID2 = {0AFACED1-E828-11D1-9187-B532F1E9575D}<br>
+UICLSID = {0AFACED1-E828-11D1-9187-B532F1E9575D}</div><br>
+
+<p class="c"><span class=small><strong> desktop.ini</strong></span> </p>      
+
+
+
+
+<p class=c><img src="images/vlill/great2012_pic14.png" border=0 alt='' style="margin-bottom:15px;"> <br><span class=small><strong> Listing of .Backup0* directory </strong></span> </p>      
+
+<p>In the root directory of the drive it creates files 'System32.dat' and 'System32.bin', the payload DLLs, and the '.thumbs.db' file. The payloads are stored as resources and encrypted with a simple XOR routine.</p>
+
+<br><br>
+<pre><font color="black"> <span class="sb">static int </span> decrypt(uint8_t *data, unsigned int dataLen)
+{
+        uint32_t acc = 0xCC;
+        <span class="sb">for </span> (<span class="sb">unsigned int </span> i = 0; i &lt; dataLen; i++ )
+        {
+                uint8_t acc2 = data[i];
+                data[i] ^= acc;
+                acc = acc2;
+        }
+        <span class="sb">return </span> 0;
+} </font></pre><br><br>
+
+
+                                <div align=center>                                                                              
+<table width=80% class=fullbrd border=0>                                                                                
+<tr>    <th>    Resource        </th>   <th>    File name       </th>   <th>    Description     </th>   </tr>
+<tr>    <td>    100     </td>   <td>    System32.dat (.CatRoot.tmp)     </td>   <td>    32-bit payload  </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    101     </td>   <td>    System32.bin (.CatRoot.tmp)     </td>   <td>    64-bit payload  </td>   </tr>
+</table></div><br>                                                                              
+                                                                            
+
+<h3>USB Payload</h3>
+<p>
+Both 32-bit and 64-bit DLLs implement the same functionality. When loaded using the LNK vulnerability, they start a main thread and return. The main thread copies the payload to %TEMP% directory and loads itself again. When loaded from %TEMP%, it creates a mutex 'Isvp4003ltrEvent', patches the 'NtQueryDirectoryFile' function in ntdll.dll so that it hides its files and then sends the 'F5' key event to windows of classes 'SysListView32', 'SysTreeView32', 'DirectUIHWND', causing Explorer directory listings to refresh. This hides the files. It also waits for the event 'Global\RasSrvReady'.</p>
+<p>Then, it retrieves the following data from the system: </p>
+<ul>
+<li>Version of the Windows OS
+<li>Workstation info    
+<li>Network adapter information
+<li>Routing table
+<li>Process list
+<li>Environment variables and disk information
+<li>List of visible network shares
+<li>Network proxy information
+<li>List of visible MS SQL servers
+<li>URL cache
+</ul>
+
+<p>All this information is encoded and appended to the file '.thumbs.db' on the infected storage. This file also contains a TTL (time to live) value that is decremented by 1 each time the payload starts from the infected storage. When this counter becomes equal to zero, the payload disinfects the media by removing '.Backup0*' directories and 'System32.dat' and 'System32.bin' files, leaving '.thumbs.db' file with collected information. Known value of the TTL value is '30.'</p>
+<p>There are several 'special' versions of the payload. They contain additional PE sections with names '.exsdat,' '.exrdat,' and '.exdat'. These sections are encrypted with RC4. The encryption key is derived from an MD5 hash performed 10000 times on a combination of '%PATH%' environment string and name of the directory in %PROGRAMFILES%. </p>
+<p>The RC4 key is not yet known, neither is the contents of these sections. The payload also contains a binary resource 100 that is also encrypted.</p>
+
+<h3>.thumbs.db file</h3>
+<p>This is a container for data stolen by the 'dskapi' payload. </p>
+<div align=center>                                                      
+<table width=100% class="fullbrd">                                                   
+<tr>    <td>    <b>Offset</b>   </td>   <td>    <b>Data</b>     </td>   </tr>
+<tr style="color:grey;">        <td style="background:#f0f0f0;">    0       </td>   <td style="background:#f0f0f0;">    Magic number : 0xEB397F2B       </td>   </tr>
+<tr>    <td>    4       </td>   <td>    TTL counter     </td>   </tr>
+<tr style="color:grey;">        <td style="background:#f0f0f0;">    : </td>   <td style="background:#f0f0f0;">    Encoded data    </td>   </tr>
+</table></div><br>      
+
+
+<p>The encoded data consists of arrays of encoded strings, separated by a magic value 0xFF875686.</p>
+                                                
+<div align=center>                                                      
+<table width=100% class="fullbrd">                                                   
+<tr>    <td>    <b>Offset</b>   </td>   <td>    <b>Description</b>      </td>   </tr>
+<tr>        <td style="background:#f0f0f0;">    0       </td>   <td style="background:#f0f0f0;">    Magic number :<br>
+0xFF875686 - end of array of records, must search for the next Magic<br>
+0xFF875683 XOR ( recordLength + 5 ) - start of record
+        </td>   </tr>
+<tr>    <td>    4       </td>   <td>    Encrypted string data, recordLength bytes       </td>   </tr>
+</table></div><br>                                                      
+
+<p>Every record is encrypted by a simple algorithm using the character's position and record length and can be decrypted with the following code:</p>
+<br><br>
+                        <pre><font color="black"> <span class="sb">for </span> (<span class="sb">unsigned int </span> j = 0; j &lt; recordLen; j++ )
+                        {
+                                ptr[i + j] ^= recordLen;
+                                ptr[i + j] -= j;
+                        } </font></pre>
+<br><br>
+
+<div class="color"><pre><font color="black">File Version:    5.1.3700.0
+Product Version: 5.1.3700.0
+File OS:         NT (WINDOWS32)
+File Type:       DRV
+File SubType:    DRV SOUND
+File Date:       00:00:00  00/00/0000
+Language/Code Page: 1033/1200
+CompanyName:        Microsoft Corporation
+FileDescription:    Disk Helper
+FileVersion:        5.1.3700.0
+InternalName:       dskapi.ocx
+LegalCopyright:     &iquest; Microsoft Corporation. All rights reserved.
+OriginalFilename:   dskapi.ocx
+ProductName:        MicrosoftR WindowsR Operating System
+ProductVersion:     5.1.3700.0</font></pre></div></br>
+<p class="c"><span class=small><strong> Version info 'dskapi.ocx' </strong></span> </p>      
+<h2><a name="7"></a>Smdk.ocx</h2>
+<p>Name of the module used in Gauss: 'UsbDir'</p>
+
+                                <div align=center>                                                      
+<table width=80% class=fullbrd border=0>                                                        
+<tr>    <th>    File names      </th>   <th>    %system32%\smdk.ocx     </th>   </tr>
+<tr>    <td>    Some known MD5  </td>   <td>    "5604A86CE596A239DD5B232AE32E02C6<br> 
+90F5C45420C295C73067AF44028CE0DD"       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Image Size      </td>   <td>    212 992 bytes   </td>   </tr>
+<tr>    <td>    Date of compilation     </td>   <td>    "27.09.2011<br>
+17.10.2011"     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Related files   </td>   <td>    %temp%\~mdk.tmp </td>   </tr>
+</table></div>                                                  
+<br>
+
+<p>Creates events: '{B336C220-B158}', 'Global\SmSrvReady'<br>
+All functionality is implemented in 'RevertCache' export. The module starts its main thread and then returns. The main thread waits for the '{B336C220-B158}' event and continuously checks for the presence of anti-malware software.</p>
+<p>'ValidateEntry' signals the '{B336C220-B158}' event, allowing for the disk enumeration routine to start.</p>
+<p>Writes log file: %temp%\~mdk.tmp<br>
+Reads registry key HKLM\SYSTEM\CurrentControlSet\Services\Disk\Enum</p>
+<p>Checks for running antimalware products by names and exits if they are present: </p>
+<div class="small"><p>
+        AVKProxy.exe</p>
+<p>
+        AVKService.exe</p>
+<p>
+        AVKTray.exe</p>
+<p>
+        AVKWCtl.exe</p>
+<p>
+        GDFirewallTray.exe</p>
+<p>
+        GDFwSvc.exe</p>
+<p>
+        GDScan.exe</p>
+<p>
+        abcd.exe</p>
+<p>
+        avp.exe</p>
+<p>
+        fameh32.exe</p>
+<p>
+        fch32.exe</p>
+<p>
+        fsar32.exe</p>
+<p>
+        fsav32.exe</p>
+<p>
+        fsdfwd.exe</p>
+<p>
+        fsgk32.exe</p>
+<p>
+        fsgk32st.exe</p>
+<p>
+        fsguidll.exe</p>
+<p>
+        fshdll32.exe</p>
+<p>
+        fsm32.exe</p>
+<p>
+        fsma32.exe</p>
+<p>
+        fsmb32.exe</p>
+<p>
+        fsorsp.exe</p>
+<p>
+        fspc.exe</p>
+<p>
+        fsqh.exe</p>
+<p>
+        fssm32.exe</p>
+<p>
+        fsus.exe</p>
+<p>
+        gsava.exe</p>
+<p>
+        gssm32.exe</p>
+</div>
+<p>The version of the module built on 27.09.2011 also exits if started on Windows 7 SP 1.</p>
+<p>By querying disk enum in registry, it also tries to identify whether the storage is USB-connected or not by searching 'USBSTOR' string in their information.</p>
+<p>The log file entries are compressed with Zlib.</p>
+<div class="color"><pre><font color="black">File Version:    5.1.3700.0
+Product Version: 5.1.3700.0
+File OS:         NT (WINDOWS32)
+File Type:       DRV
+File SubType:    DRV SOUND
+File Date:       00:00:00  00/00/0000
+Language/Code Page: 1033/1200
+CompanyName:        Microsoft Corporation
+FileDescription:    Disk Helper
+FileVersion:        5.1.3700.0
+InternalName:       dskapi.ocx
+LegalCopyright:     &iquest; Microsoft Corporation. All rights reserved.
+OriginalFilename:   dskapi.ocx
+ProductName:        MicrosoftR WindowsR Operating System
+ProductVersion:     5.1.3700.0</font></pre></div></br>
+<p class="c"><span class=small><strong> Version info 'smdk.ocx' (the same as in dskapi.ocx) </strong></span> </p>      
+
+<h2><a name="8"></a>McDmn.ocx</h2>
+<p>
+Name of the module used in Gauss: 'McDomain'</p>
+
+
+
+                                <div align=center>                                                      
+<table width=80% class=fullbrd border=0>                                                        
+<tr>    <th>    File names      </th>   <th>    %system32%\mcdmn.ocx    </th>   </tr>
+<tr>    <td>    known MD5       </td>   <td>    9CA4A49135BCCDB09931CF0DBE25B5A9        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Image Size      </td>   <td>    102 400 bytes   </td>   </tr>
+<tr>    <td>    Date of compilation     </td>   <td>    16.09.2011      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Related files   </td>   <td>    %temp%\md.bak   </td>   </tr>
+</table></div><br>                                                      
+                                                                    
+
+<p>This module is a Windows DLL file with one exported function called 'DllRegisterServer.'<p>
+<p>It creates log file: %temp%\md.bak that is encrypted with 2-byte XOR.</p>
+<p>Uses LsaQueryInformationPolicy to retrieve the name of the primary domain. Retrieves information about network adapters. All this information is encrypted and stored in the log file.</p>
+<div class="color"><pre><font color="black">File Version:    2001.12.4414.320
+Product Version: 5.1.2600.5788
+File OS:         WINDOWS32
+File Type:       DLL
+File SubType:    UNKNOWN
+File Date:       00:00:00  00/00/0000
+Language/Code Page: 1033/1200
+CompanyName:        Microsoft Corporation
+FileDescription:    Windows File Extension
+FileVersion:        2001.12.4414.320
+LegalCopyright:     Copyright (C) Microsoft Corp. 1995-1999
+LegalTrademarks:    Microsoft(R) is a registered trademark of Microsoft <br>Corporation. Windows(TM) is a trademark of Microsoft Corporation
+ProductName:        MicrosoftR WindowsR Operating System
+ProductVersion:     05.01.2600.5788</font></pre></div></br>
+<p class="c"><span class=small><strong> Version info 'mcdmn.ocx' </strong></span> </p>      
+
+<h2><a name="9"></a>Lanhlp32.ocx</h2>
+<p>Name of the module used in Gauss: 'Tailor'</p>
+
+
+
+                                <div align=center>                                                      
+<table width=80% class=fullbrd border=0>                                                        
+<tr>    <th>    File names      </th>   <th>    %system32%\lanhlp32.ocx </th>   </tr>
+<tr>    <td>    Known MD5       </td>   <td>    ED2B439708F204666370337AF2A9E18F        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Image Size      </td>   <td>    278 528 bytes   </td>   </tr>
+<tr>    <td>    Date of compilation     </td>   <td>    26.10.2011      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Related files   </td>   <td>    %systemroot%\Temp\s61cs3.dat    </td>   </tr>
+</table></div><br>                                                      
+                                                                     
+
+
+<p>The module is a Windows DLL file with one exported function called 'DllRegisterServer.'</p>
+<p>It contains encrypted debug information that includes the location of the project, 'd:\projects\tailor\':</p>
+<div class="color"><pre><font color="black"><b>d:\projects\tailor\utils\Exceptions.h</b>
+..\Utils\Buffer.cpp
+..\Utils\CryptUtils.cpp
+..\Utils\Event.cpp
+..\Utils\EveryoneSecurityAttributes.cpp
+..\Utils\File.cpp
+..\Utils\Mutex.cpp
+..\Utils\MyWlanApi.cpp
+..\Utils\OsUtils.cpp
+..\Utils\RemoteMemoryBuffer.cpp
+..\Utils\Storage.cpp
+..\Utils\StringUtils.cpp
+..\Utils\Waiter.cpp
+.\SavedWNetworkConnectionsWin5.cpp
+.\SavedWNetworkConnectionsWin6.cpp
+.\VisibleNetworks.cpp</font></pre></div></br>
+
+<p>Creates mutex : Global\EnvDBE</p>
+<p>Creates log file: %systemroot%\Temp\s61cs3.dat</p>
+<p>Operates on Windows XP, Windows Vista and Windows 7. </p>
+
+<p>On Windows XP: <br>
+.\SavedWNetworkConnectionsWin5.cpp<br>
+Enumerates registry keys in HKLM\SOFTWARE\Microsoft\WZCSVC\Parameters\Interfaces\<br>
+Extracts 'Static#' values that contain wireless key data.</p>
+<p>On Windows Vista and Windows 7 : <br>
+..\Utils\MyWlanApi.cpp<br>
+.\SavedWNetworkConnectionsWin6.cpp <br>
+.\VisibleNetworks.cpp</p>
+<p>Uses extended wlanapi.dll API to access WLAN information. Enumerates available wireless interfaces, then enumerates all profiles and extracts SSID, name and wireless key information. Then, it retrieves the list of wireless networks visible to all the wireless interfaces.</p>
+<p>The log file is encrypted with a simple 1-byte XOR.</p>
+<div class="color"><pre><font color="black">File Version:    5.1.3700.0
+Product Version: 5.1.3700.0
+File OS:         NT (WINDOWS32)
+File Type:       DRV
+File SubType:    DRV SOUND
+File Date:       00:00:00  00/00/0000
+Language/Code Page: 1033/1200
+CompanyName:        Microsoft Corporation
+FileDescription:    Microsoft Windows LAN Component
+FileVersion:        5.1.3700.0
+InternalName:       lanhlp32.ocx
+LegalCopyright:     &iquest; Microsoft Corporation. All rights reserved.
+OriginalFilename:   lanhlp32.ocx
+ProductName:        MicrosoftR WindowsR Operating System
+ProductVersion:     5.1.3700.0</font></pre></div></br>
+<p class="c"><span class=small><strong> Version info 'lanhlp32.ocx' </strong></span> </p>      
+
+<h2><a name="10"></a>Devwiz.ocx</h2>
+<p>
+Name of the module used in Gauss: 'Cosmos'
+</p>
+
+
+
+                               <div align=center>                                                       
+<table width=80% class=fullbrd border=0>                                                        
+<tr>    <th>    File names      </th>   <th>    %system32%\devwiz.ocx   </th>   </tr>
+<tr>    <td>    Known MD5       </td>   <td>    CBB982032AED60B133225A2715D94458        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Image Size      </td>   <td>    102 400 bytes   </td>   </tr>
+<tr>    <td>    Date of compilation     </td>   <td>    19.03.2012      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Related files   </td>   <td>    %temp%\~ZM6AD3.tmp      </td>   </tr>
+</table></div><br>                                                      
+                                                      
+
+
+<p>The module is a Windows DLL file with one exported function called 'RefreshDev.' </p>
+<p>It creates log file : %WINDIR%\temp\~ZM6AD3.tmp</p>
+<p>The log file is not encrypted and starts with a magic number 0xF68B973D</p>
+<p>The module collects the following information and writes it to the log file : </p>
+<ul>
+<li>CMOS RAM contents 
+<li>Registry keys :
+<p class="shrift"> [ HKLM\HARDWARE\DESCRIPTION\System ]<br>
+SystemBiosVersion, SystemBiosDate<br><br>
+
+[ HARDWARE\DESCRIPTION\System\BIOS ] <br>
+BIOSVendor, BIOSVersion, BIOSReleaseDate, BaseBoardManufacturer, BaseBoardProduct, <br> BaseBoardVersion, SystemFamily, SystemManufacturer, SystemProductName, SystemSKU, <br>SystemVersion
+</ul>
+<p>All retrieved information is written to the log file.</p>
+<div class="color"><pre><font color="black">File Version:    5.1.2600.0
+Product Version: 5.1.2600.0
+File OS:         NT (WINDOWS32)
+File Type:       DRV
+File SubType:    DRV SOUND
+File Date:       00:00:00  00/00/0000
+Language/Code Page: 1033/1200
+CompanyName:        Microsoft Corporation
+FileDescription:    Windows Device Wizard
+FileVersion:        5.1.2600.0
+InternalName:       devwiz.ocx
+LegalCopyright:     &iquest; Microsoft Corporation. All rights reserved.
+OriginalFilename:   devwiz.ocx
+ProductName:        MicrosoftR WindowsR Operating System
+ProductVersion:     5.1.2600.0</font></pre></div></br>
+
+<p class="c"><span class=small><strong> Version info 'devwiz.ocx' </strong></span> </p>      
+
+<h2><a name="11"></a>Winshell.ocx</h2>
+<p>Name of the module used in Gauss: 'Gauss'</p>
+
+
+
+
+                               <div align=center>                                                       
+<table width=80% class=fullbrd border=0>                                                        
+<tr>    <th>    File names      </th>   <th>    %system32%\winshell.ocx </th>   </tr>
+<tr>    <td>    Some known MD5  </td>   <td>    "EF6451FDE3751F698B49C8D4975A58B5<br> 
+7AC2799B5337B4BE54E5D5B03B214572 <br>
+4FB4D2EB303160C5F419CEC2E9F57850 
+"       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Image Size      </td>   <td>    "405 504 (August 2011) <br>
+417 792 (October 2011) <br>
+401 408 (Dec 2011 - Jan 2012)
+"       </td>   </tr>
+<tr>    <td>    Number of resources     </td>   <td>    6       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Resources       </td>   <td>    121,122,123,124,125,126 </td>   </tr>
+<tr>    <td>    Date of compilation     </td>   <td>    "08.08.2011<br>
+03.10.2011<br>
+14.12.2011<br>
+05.01.2012
+"       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Related files   </td>   <td>    "%temp%\ws1bin.dat<br>
+browser.js<br>
+browser.xul<br>
+fileio.js<br>
+chrome.manifest<br>
+lppd.dat<br>
+install.rdf<br>
+rssf.dat<br>
+lfm.dat<br>
+mppd.dat<br>
+pddp.dat
+"       </td>   </tr>
+</table></div><br>                                                      
+                                                     
+
+
+<p>Creates events:  'Global\SrvReportCondition', 'Global\DhwSyncEvent', 'Global\ShellSync'</p>
+<p>Interestingly, all three variants of the module that we have analyzed contain information about the location and names of the original projects:</p>
+
+
+                               <div align=center>                                                       
+<table width=80% class=fullbrd border=0>                                                        
+<tr>    <th>    Variant </th>   <th>    Path to project files   </th>   </tr>
+<tr>    <td>    August 2011     </td>   <td>    d:\projects\gauss       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    October 2011    </td>   <td>    d:\projects\gauss_for_macis_2   </td>   </tr>
+<tr>    <td>    Dec 2011-Jan 2012       </td>   <td>    c:\documents and settings\flamer\desktop\gauss_white_1  </td>   </tr>
+</table></div>                                                  
+                                             
+<br>
+
+<p>Contains encrypted debug information that includes the location and files of the project:</p>
+<div class="color"><pre><font color="black">c:\documents and settings\flamer\desktop\gauss_white_1\utils\Exceptions.h
+.\main.cpp
+.\Manager.cpp
+c:\documents and settings\flamer\desktop\gauss_white_1\utils\SmartPtr.h
+.\Injector.cpp
+c:\documents and settings\flamer\desktop\gauss_white_1<br>\gauss\../Utils/ComUtils.h
+.\History.cpp
+.\FirefoxPluginInstaller.cpp
+.\Telemetry.cpp
+.\Storage.cpp
+.\OsUtils.cpp
+.\ProcessSnapshot.cpp
+.\Event.cpp
+.\GaussThread.cpp
+.\Buffer.cpp
+.\RemoteMemoryBuffer.cpp
+.\File.cpp
+.\Mutex.cpp
+.\Waiter.cpp
+.\EveryoneSecurityAttributes.cpp
+.\Catcher.cpp
+.\BrowserConnector.cpp
+c:\documents and settings\flamer\desktop\gauss_white_1<br>\minime\../Utils/SmartPtr.h
+.\Assigner.cpp
+.\IEAbstractElements.cpp
+.\FormExtractor.cpp
+.\COMAbstractDataTypes.cpp</font></pre></div>
+<br>
+<p>The debug information which was accidentally forgotten by the developers provides some interesting details. For instance, the Windows username which compiled the project can be seen in the strings above as 'flamer'.</p>
+<p>DllMain starts a thread only if loaded by 'explorer.exe'. </p>
+<p>Writes log file: %systemroot%\Temp\ws1bin.dat. Log file starts with magic number 0x0A86FD375, encrypted with 1-byte XOR 0x46. Log file writer is guarded by mutex 'Global\ShellSyncCom'.</p>
+<p>Reads registry key :  <span class="shrift">SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability
+ShutdownInterval = binary data</span></p>
+<p>Checks Windows version and, onWindows Vista and Windows 7, it accesses %SystemDrive%\Users. On earlier versions, it uses %SystemDrive%\Documents and settings and gets list of directories there.</p>
+<p>Export 'InitShellEx' : Enumerates all entries in HKEY_USERS, removes all entries in SOFTWARE\Mozilla\Mozilla\Firefox for each user, searches for its log ws1bin.dat and removes it.</p>
+<p>Export 'SetWindowEvent' : set event 'Global\DhwSyncEvent', wait for other thread to exit in 20 seconds, then terminate that thread.</p>
+<p>Export 'ShellNotifyUser' : returns 1</p>
+<p>Export 'ShellNotifyUserEx' : main export.  Starts its main thread that should be monitored by the event 'SetWindowEvent' and returns. </p>
+<p>Lists running processes and returns if 'evil.exe' is running. 
+Additionally logs the presence of the following registry keys : <span class="shrift"> 'HKLM\SOFTWARE\KasperskyLab\AVP6',  'HKLM\SOFTWARE\KasperskyLab\protected\AVP7'</span> </p>
+<p>Then it starts a loop searching for running instances of %systemroot%\explorer.exe. If found, it injects %systemroot%\system32\winshell.ocx (own body) into that process.</p>
+<p>It uses an interesting technique to inject itself into Explorer: it creates a remote thread with the address of 'LoadLibraryW' API as its start address. The path to its ocx file is passed to the function as 'lpParameter'.</p>
+<p>Telemetry: It retrieves and logs the following:</p>
+<ul>
+<li>Computer name
+<li>Windows OS version
+<li>List of running processes
+<li>List of directories in %PROGRAMFILES%
+<li>Version of Internet Explorer browser
+<li>Primary domain name
+<li>Network adapter information
+</ul>
+<p>Searches for Cookies directory, retrieves all cookie files and writes their contents into its log. Searches for cookies that contain the following strings:</p>
+
+<div class="small"><p>
+        paypal</p>
+<p>
+        mastercard</p>
+<p>
+        eurocard</p>
+<p>
+        visa</p>
+<p>
+        americanexpress</p>
+<p>
+        bankofbeirut</p>
+<p>
+        eblf</p>
+<p>
+        blombank</p>
+<p>
+        byblosbank</p>
+<p>
+        citibank</p>
+<p>
+        fransabank</p>
+<p>
+        yahoo</p>
+<p>
+        creditlibanais</p>
+<p>
+        amazon</p>
+<p>
+        facebook</p>
+<p>
+        gmail</p>
+<p>
+        hotmail</p>
+<p>
+        ebay</p>
+<p>
+        maktoob</p>
+</div>
+<p>Then, it retrieves Internet Explorer browsing history using IUrlHistoryStg::EnumUrls function, and tries to extract password and text fields from loaded pages.</p>
+<p>The Firefox plugin is written in several files, all of them are extracted and decrypted from the resources of the module.</p>
+
+
+                               <div align=center>                                                       
+<table width=40% class=fullbrd border=0>                                                        
+<tr>    <th>    Resource Id     </th>   <th>    File name of the Firefox Plugin component       </th>   </tr>
+<tr>    <td>    121     </td>   <td>    browser.js      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    122     </td>   <td>    browser.xul     </td>   </tr>
+<tr>    <td>    123     </td>   <td>    fileio.js       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    124     </td>   <td>    chrome.manifest </td>   </tr>
+<tr>    <td>    125     </td>   <td>    lppd.dat        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    126     </td>   <td>    install.rdf     </td>   </tr>
+</table><br>    </div>                                          
+                                      
+
+<p>Appends Firefox configuration file 'prefs.js'  with the following string, disabling Firefox 'select your add-ons' window that is usually shown after each Firefox update:</p>
+<p class="shrift">user_pref("extensions.shownSelectionUI", true);</p>
+
+<p>Installs the Firefox extension, on Windows Vista and Windows 7 into AppData\Roaming\Mozilla\Firefox\Profiles, on earlier versions into Application Data\Mozilla\Firefox\Profiles. All files are written in a directory named '{a288cad4-7b24-43f8-9f4d-8e156305a8bc}'.</p>
+<p>The Firefox extension extracts the following data:</p>
+<ul>
+<li>Browsing history
+<li>Passwords (saved and entered by the user)
+<li>Cookies. The extension can be configured to look only for cookies of Google, Hotmail, Facebook, Yahoo
+</ul>
+<div class="color"><pre><font color="black">const Cc = Components.classes;
+const Ci = Components.interfaces;
+const EXTENSION_ID = "{a288cad4-7b24-43f8-9f4d-8e156305a8bc}";
+const EXTENSION_PATH = DirIO.get("ProfD").path+"\\extensions\\"+EXTENSION_ID;
+const QUERY_ID = 'YlU/X1gFa2Isb1YkcFMnP18u`1kkb1goYFUOakAgY1ULa1EjYlU/X1gPXWMyc18xY<br>GM0b1UxalEsYVYgX1Uha18qdVEna18lYWQi`Dgob2QubmklYWQi`DEjYGIkb2Mv<br>XWMyc18xYFwoclUl`WgPblUlb/oSY18uY1wk`FkjYT8tRV4ocFYkcFMnPVwrP18<br>u`1kkb2gublk/';
+const EXTENSION_URL = "about:addons";
+const EXTENSION_XUL = "chrome://mozapps/content/extensions/extensions.xul";
+const ERROR_FILE = "rssf.dat";
+const LOG_FILE = "lfm.dat";
+const OUTPUT_FILE = "mppd.dat";
+const VERSION_FILE = "lddp.dat";
+const MAX_FILE_SIZE = Math.pow(2,20)*10;
+const MEAN_ROW_SIZE = 100;
+const MAX_ROW_COUNT = (1/3)*(MAX_FILE_SIZE/MEAN_ROW_SIZE); </font></pre></div></br>
+
+<p class="c"><span class=small><strong> Part of browser.js code</strong></span> </p>      
+<p>The Firefox extension writes several log files in its directory:</p>
+
+
+
+                                <div align=center>                                                      
+<table width=40% class=fullbrd border=0>                                                        
+<tr>    <th>    Log file name   </th>   <th>    Description     </th>   </tr>
+<tr>    <td>    rssf.dat        </td>   <td>    Browsing history        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    lfm.dat </td>   <td>    Log file        </td>   </tr>
+<tr>    <td>    mppd.dat        </td>   <td>    Collected passwords     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    pddp.dat        </td>   <td>    Collected cookies       </td>   </tr>
+</table><br>    </div>                                          
+                                     
+
+<div class="color"><pre><font color="black">File Version:    5.1.3700.0
+Product Version: 5.1.3700.0
+File OS:         NT (WINDOWS32)
+File Type:       DRV
+File SubType:    DRV SOUND
+File Date:       00:00:00  00/00/0000
+Language/Code Page: 1033/1200
+CompanyName:        Microsoft Corporation
+FileDescription:    Microsoft Windows Shell Component
+FileVersion:        5.1.3700.0
+InternalName:       winshell.ocx
+LegalCopyright:     &iquest; Microsoft Corporation. All rights reserved.
+OriginalFilename:   winshell.ocx
+ProductName:        MicrosoftR WindowsR Operating System
+ProductVersion:     5.1.3700.0</font></pre></div></br>
+<p class="c"><span class=small><strong> Version info 'winshell.ocx' </strong></span> </p>      
+
+<h2><a name="12"></a>Windig.ocx</h2>
+<p>
+Name of the module used in Gauss: 'Lagrange'</p>
+
+
+                                <div align=center>                                                      
+<table width=80% class=fullbrd border=0>                                                        
+<tr>    <th>    File names      </th>   <th>    %system32%\windig.ocx   </th>   </tr>
+<tr>    <td>    Known MD5       </td>   <td>    DE2D0D6C340C75EB415F726338835125        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Image Size      </td>   <td>    180224 bytes   </td>   </tr>
+<tr>    <td>    Date of compilation     </td>   <td>    15.07.2011      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Related files   </td>   <td>    Fonts\ pldnrfn.ttf      </td>   </tr>
+</table></div><br>                                                      
+                                                  
+
+
+<p>The module is a Windows DLL file with one exported function called 'GlobalDeleteAtomL.'\<br>
+The module reads the registry key that is originally created by 'ShellHW' module : </p>
+<p class="shrift">HKLM\ SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability <br>
+ShutdownInterval = binary data</p>
+
+<p>If the value is not present in the registry, it writes a random value into that key.</p>
+<p>Then, it creates a new TrueType font file '%SystemRoot%\fonts\pldnrfn.ttf' (62 668 bytes long) from a template and using randomized data from the ShutdownInterval key. The creation time of the font file is set to the creation time of the Arial font, %SystemRoot%\fonts\ARIAL.TTF. </p>
+<p>Then, a custom font named 'Palida Narrow' is registered in the system font storage using the 'AddFontResourceW' API function. The module also creates a registry value: </p>
+<p class="shrift">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts<br>
+Palida Narrow (TrueType)=pldnrfn.ttf</p>
+
+<p>The purpose of the addition of this font is not yet known. It appears to contain valid Western, Baltic and Turkish symbols.
+</p>
+
+
+<p class=c><a href="images/vlill/great2012_pic15.png" target=_blank><img src="images/vlill/great2012_pic15s.png" border=0 alt='' style="margin-bottom:15px;"> &nbsp;<img src='images/vlill/enlarge.gif' border=0 ></a> <br><span class=small><strong> Font information from Font Viewer
+</strong></span> </p>      
+
+<div class="color"><pre><font color="black">File Version:    2001.12.4414.320
+Product Version: 5.1.2600.5788
+File OS:         WINDOWS32
+File Type:       DLL
+File SubType:    UNKNOWN
+File Date:       00:00:00  00/00/0000
+Language/Code Page: 1033/1200
+CompanyName:        Microsoft Corporation
+FileDescription:    WIN32 Digital Library
+FileVersion:        2001.12.4414.320
+LegalCopyright:     Copyright (C) Microsoft Corp. 1995-1999
+LegalTrademarks:    Microsoft(R) is a registered trademark of Microsoft <br>Corporation. Windows(TM) is a trademark of Microsoft Corporation
+ProductName:        MicrosoftR WindowsR Operating System
+ProductVersion:     05.01.2600.5788</font></pre></div></br>
+<p class="c"><span class=small><strong> Version info 'windig.ocx' </strong></span> </p>      
+<h2><a name="13"></a>Gauss C&C Information</h2>
+<p>To upload data stolen from infected machines, Gauss uses a number of command-and-control servers predefined in its flexible configuration. </p>
+
+
+<p class=c><a href="images/vlill/great2012_pic16.png" target=_blank><img src="images/vlill/great2012_pic16s.png" border=0 alt='' style="margin-bottom:15px;"> &nbsp;<img src='images/vlill/enlarge.gif' border=0 ></a> <br><span class=small><strong> Figure 1 - Gauss encrypted C&C information data </strong></span> </p>      
+
+<p>Here's a look at the decrypted configuration data:</p>
+
+<p class=c><a href="images/vlill/great2012_pic17.png" target=_blank><img src="images/vlill/great2012_pic17s.png" border=0 alt='' style="margin-bottom:15px;"> &nbsp;<img src='images/vlill/enlarge.gif' border=0 ></a> <br><span class=small><strong> Figure 2 - Gauss decrypted C&C configuration data
+</strong></span> </p>      
+
+<p>In the example above, we can see the C&C domains/hosts together with the name of the script (userhome.php) on the server which is used for communication.</p>
+<p>Going through the multitude of Gauss samples, we identified several domains used as C&C servers:</p>
+<ul>
+<li>*.gowin7.com
+<li>*.secuurity.net
+<li>*.datajunction.org
+<li>*.bestcomputeradvisor.com
+<li>*.dotnetadvisor.info
+<li>*.guest-access.net
+</ul>
+
+
+
+                               <div align=center>                                                                                                                               
+<table width=80% class=fullbrd border=0>                                                                                                                                
+<tr>    <th>    Wmiqry.ocx      </th>   <th>    &nbsp;  </th>   <th>    &nbsp;  </th>   <th>    &nbsp;  </th>   <th>    &nbsp;  </th>   </tr>
+<tr>    <td>    01.06.2011      </td>   <td>    dotnetadvisor.info      </td>   <td>    bestcomputeradvisor.info        </td>   <td>    datajunction.org        </td>   <td>    guest-access.net        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    16.07.2011      </td>   <td>    *.bestcomputeradvisro.info      </td>   <td>    *.guest-access.net      </td>   <td>    &nbsp;  </td>   <td>    &nbsp;  </td>   </tr>
+<tr>    <td>    18.07.2011      </td>   <td>    *.bestcomputeradvisor.info      </td>   <td>    *.guest-access.net      </td>   <td>    &nbsp;  </td>   <td>    &nbsp;  </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    28.09.2011      </td>   <td>    *.gowin7.com    </td>   <td>    *.secuurity.net </td>   <td>    &nbsp;  </td>   <td>    &nbsp;  </td>   </tr>
+<tr>    <td>    20.10.2011      </td>   <td>    *.datajunction.org      </td>   <td>    *.dotnetadvisor.info    </td>   <td>    &nbsp;  </td>   <td>    &nbsp;  </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    20.10.2011      </td>   <td>    *.gowin7.com    </td>   <td>    *.secuurity.net </td>   <td>    &nbsp;  </td>   <td>    &nbsp;  </td>   </tr>
+</table>        </div><br>                                                                                                                      
+                                                                                                                   
+
+<p>Depending on the variant, * can be 'a' or 'b' or 'c' - and so on.For instance, a fully qualified hostname as in the example above is 'b.gowin7.com'.</p>
+<p>Most samples we have use '*.gowin7.com' and '*.secuurity.net'. The domains 'gowin7.com' and 'secuurity.net ' have been registered by  an 'Adolph Dybevek, which is most likely a fake identity:</p>
+<p>owner-name: Adolph Dybevek<br>
+owner-address: Prinsen gate 6<br>
+owner-city: Oslo<br>
+admin-address: Prinsen gate 6<br>
+ICANN Registrar: UNITED-DOMAINS AG<br>
+Created: 2012-03-15<br>
+Expires: 2013-03-15 <br>
+Updated: 2012-03-15</p>
+
+<p>As in the case of Flame these domain registration addresses point to existing businesses.  For example, at Prinsens Gate 6 in Olso, we find a hotel in Norway:</p>
+
+<p class=c><img src="images/vlill/great2012_pic18.png" border=0 alt='' style="margin-bottom:15px;"> <br><span class=small><strong> </strong></span> </p>      
+
+<p>Similarly, many of Flame C&D domain fake registrations used addresses of hotels.</p>
+<p>During the period of monitoring, we observed these two main domains pointing to two different servers in India and Portugal. Based on passive DNS research, we identified three other servers, located in the US which appear to have been used as C&C.</p>
+
+<p>The hosts 'gowin7.com' and 'secuurity.net'   pointed to the following IP addresses:
+</p>
+
+
+
+                                <div align=center>                                                                              
+<table width=80% class=fullbrd border=0>                                                                                
+<tr>    <th>    Date    </th>   <th>    Domain  </th>   <th>    IP      </th>   </tr>
+<tr>    <td>    28.06.2012 23:05        </td>   <td>    b.gowin7.com    </td>   <td>    109.71.45.115   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    2012-06-29 07:05:28 (changed)   </td>   <td>    b.gowin7.com    </td>   <td>    182.18.166.116  </td>   </tr>
+<tr>    <td>    28.06.2012 23:05        </td>   <td>    b.secuurity.net </td>   <td>    109.71.45.115   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    2012-06-29 07:05:29 (changed)   </td>   <td>    b.secuurity.net </td>   <td>    182.18.166.116  </td>   </tr>
+</table>        </div><br>                                                                      
+                                                                                                                     
+
+
+<p>On 29th of June, 2012, the two C&C domains 'gowin7.com' and 'secuurity.net' were changed from IP 109.71.45.115 to a new IP 182.18.166.116.</p>
+<p>Both servers were shut down around July 13th, 2012. Prior to shut down, we managed to collect important information. Both appeared to be running Debian Linux, which is consistent with the Flame C&C servers. They were listening on ports 22, 80 and 443. The SSL certificates were self-signed, once again, the same as in the case of Flame. Here's the certificate for the server in Portugal:</p>
+
+<p class=c><img src="images/vlill/great2012_pic19.png" border=0 alt='' style="margin-bottom:15px;"> <br><span class=small><strong> </strong></span> </p>      
+
+<p>If we are to believe the information in the certificate, it was generated on 17 Feb 2012.</p>
+<p>The server at 182.18.166.116 (India) appears to currently host two other related domains:</p>
+<ul>
+
+<li>bestcomputeradvisor.com 
+<li>dotnetadvisor.info
+</ul>
+
+<p>Both have been registered by somebody named Gilles Renaud, probably another fake identity:</p>
+</p>Registrant:</p>
+<p>      Gilles Renaud<br>
+      Neugasse 10<br>
+      Zurich, Zurich 8005<br>
+      CH</p>
+
+<p>They were previously hosted in the US, at the IPs: 173.204.235.204 and 173.204.235.196. </p>
+<p>We currently have seen samples which used {e,g,h}.bestcomputeradvisor.com and 'c.dotnetadvisor.info' for command-and-control. It's quite possible that other samples exist pointing to different hosts.</p>
+<p>The additional domains  'datajunction.org' and 'guest-access.net' can be found in some samples and it is also used for C&C communications. We currently have samples which use 'c.datajunction.org' and 'd.datajunction.org' but there are probably others using 'a.*' and 'b.*'.</p>
+<p>Both have been registered by somebody named 'Peter Kulmann,' probably another fake identity:</p>
+<p>Registrant Name:Peter Kulmann<br>
+Registrant Street1:Antala Staska 1301/19<br>
+Registrant Street2: <br>
+Registrant Street3: <br>
+Registrant City:Prague<br>
+Registrant State/Province: <br>
+Registrant Postal Code:14000<br>
+Registrant Country:CZ</p>
+
+<p>The address 'Antala Staska 1301/19' appears once again to be fake - pointing to a supermarket/pharmacy in Prague:</p>
+
+<p class=c><a href="images/vlill/great2012_pic20.png" target=_blank><img src="images/vlill/great2012_pic20s.png" border=0 alt='' style="margin-bottom:15px;"> &nbsp;<img src='images/vlill/enlarge.gif' border=0 ></a> <br><span class=small><strong> </strong></span> </p>      
+
+<p>Currently (as of August 2012), all the  '*.datajunction.org' hosts point to the C&C server in India. Previously, they pointed to the server in Portugal.  Just like the others, they were previously hosted  in US. </p>
+<p>In addition to these, we identified another domain named 'dataspotlight.net' which was hosted on the same servers.  The registrant is unknown and we couldn't find any samples using it, however, it is probably related to the others.</p>
+<h3>Gauss C2 Domains Overview:
+</h3>
+<p>In total, we have identified 7 domains used or related to the Gauss malware:</p>
+
+
+                                <div align=center>                                                                                                                              
+<table width=80% class=fullbrd border=0>                                                                                                                                
+<tr>    <th>    Domain  </th>   <th>    Registered by   </th>   <th>    Currently hosted        </th>   <th>    Previously hosted       </th>   <th>    Older hosted:   </th>   </tr>
+<tr>    <td>    gowin7.com      </td>   <td>    Adolph Dybevek  </td>   <td>    India   </td>   <td>    Portugal        </td>   <td>    US      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    secuurity.net   </td>   <td>    Adolph Dybevek  </td>   <td>    India   </td>   <td>    Portugal        </td>   <td>    US      </td>   </tr>
+<tr>    <td>    datajunction.org        </td>   <td>    PeteršKulmann   </td>   <td>    India   </td>   <td>    Portugal        </td>   <td>    US      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    bestcomputeradvisor.com </td>   <td>    GillesšRenaud   </td>   <td>    India   </td>   <td>    Portugal        </td>   <td>    US      </td>   </tr>
+<tr>    <td>    dotnetadvisor.info      </td>   <td>    GillesšRenaud   </td>   <td>    India   </td>   <td>    Portugal        </td>   <td>    US      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    dataspotlight.net       </td>   <td>    UNKNOWN </td>   <td>    India   </td>   <td>    Portugal        </td>   <td>    UNKNOWN </td>   </tr>
+<tr>    <td>    guest-access.net        </td>   <td>    Peter Kulmann   </td>   <td>    No      </td>   <td>    No      </td>   <td>    No      </td>   </tr>
+</table>        </div><br>                                                                                                                      
+                                                                                                                    
+<p>
+Domain registration history:</p>
+
+
+
+
+                                <div align=center>                                                      
+<table width=80% class=fullbrd border=0>                                                        
+<tr>    <th>    Domain  </th>   <th>    Registration date       </th>   </tr>
+<tr>    <td>    bestcomputeradvisor.com, dotnetadvisor.info     </td>   <td>    22 July 2011    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    datajunction.org. guest-access.net      </td>   <td>    26 July 2011    </td>   </tr>
+<tr>    <td>    gowin7.com, secuurity.net       </td>   <td>    15 March 2012   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    dataspotlight.net       </td>   <td>    18 April 2012   </td>   </tr>
+</table></div><br>                                                      
+                                                    
+
+
+<p>As  can be seen from the table above, four domains  were created in 2011 and were used in older samples. The newer samples use 'gowin7.com' and 'secuurity.net', which were registered on March 15th, 2012.</p>
+<p>Known Gauss C2 server IPs:</p>
+
+
+
+                                <div align=center>                                                      
+<table width=50% class=fullbrd border=0>                                                        
+<tr>    <th>    Server  </th>   <th>    Location        </th>   </tr>
+<tr>    <td>    182.18.166.116  </td>   <td>    India, Hyderabad        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    109.71.45.115   </td>   <td>    Portugal, Constancia    </td>   </tr>
+<tr>    <td>    173.204.235.204 </td>   <td>    United States, San Francisco    </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    173.204.235.196 </td>   <td>    United States, San Francisco    </td>   </tr>
+<tr>    <td>    173.204.235.201 </td>   <td>    United States, San Francisco    </td>   </tr>
+</table><br>    </div>                                          
+                                       
+
+<p>
+Here's a comparison of the  Flame and Gauss C2 infrastructure:</p>
+
+
+<div align=center>                                                                              
+<table width=80% class=fullbrd border=0>                                                                                
+<tr>    <th>    &nbsp;  </th>   <th>    Flame   </th>   <th>    Gauss   </th>   </tr>
+<tr>    <td>    Hosting </td>   <td>    VPS running Debian Linux        </td>   <td>    VPS running Debian Linux        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Services available      </td>   <td>    SSH, HTTP, HTTPS        </td>   <td>    SSH, HTTP, HTTPS        </td>   </tr>
+<tr>    <td>    SSL certificate </td>   <td>    'localhost.localdomain' - self signed   </td>   <td>    'localhost.localdomain' - self signed   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Registrant info </td>   <td>    Fake names      </td>   <td>    Fake names      </td>   </tr>
+<tr>    <td>    Address of registrants  </td>   <td>    Hotels, shops   </td>   <td>    Hotels, shops   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    C2 traffic protocol     </td>   <td>    HTTPS   </td>   <td>    HTTPS   </td>   </tr>
+<tr>    <td>    C2 traffic encryption   </td>   <td>    None    </td>   <td>    XOR 0xACDC      </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    C2 script names </td>   <td>    cgi-bin/counter.cgi, common/index.php   </td>   <td>    userhome.php    </td>   </tr>
+<tr>    <td>    Number of C2 domains    </td>   <td>    ~100    </td>   <td>    6       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    Number of fake identities used to register domains      </td>   <td>    ~20     </td>   <td>    3       </td>   </tr>
+</table>        </div><br>                                                                      
+                                                                  
+                                                                   
+
+<h3>DNS Balancing</h3>
+<p>For some of the C2's, the controllers used a technique known as DNS balancing or '<a href='http://en.wikipedia.org/wiki/Round-robin_DNS' target=_blank>Round robin DNS</a>' - probably to even the load. This is a common technique in the case of massive traffic to a website, suggesting that at their peak, the Gauss C2's were handling quite a lot of data.</p>
+<p>Here's one such example of DNS balancing:</p>
+<pre><font color="black">;; QUESTION SECTION:
+;DATAJUNCTION.ORG.              IN      A
+
+;; ANSWER SECTION:
+DATAJUNCTION.ORG.         900     IN      A       182.18.166.116
+DATAJUNCTION.ORG.       3600    IN       A       173.204.235.204
+DATAJUNCTION.ORG.         900     IN      A       109.71.45.115</font></pre>
+
+<p>As it can be seen, the domain datajunction.org resolves to three different IPs: 182.18.166.116, 173.204.235.204 and 109.71.45.115.</p>
+<h2><a name="14"></a>Timeline</h2>
+<p>We tried to put together all the date-of-creation information for the different Gauss modules, as well as those for Flame and Duqu. Since no Gauss modules created before 2011 have been found, the table below does not include earlier data for Flame and Duqu modules.</p>
+<p class=c><img src="images/vlill/great2012_pic21.png" border=0 alt='' style="margin-bottom:15px;"> <br><span class=small><strong> </strong></span> </p>      
+<h2><a name="15"></a>Files list</h2>
+<p>We have put together the names of all modules, temporary files, log files and data files used by Gauss in one way or another and that are known to us.</p>
+
+
+                              <table align=center class=fullbrd>                                                        
+<tr>    <th>    Main modules    </th>   <th>    Path    </th>   </tr>
+<tr>    <td>    wmiqry32.dll    </td>   <td>    %system%\wbem   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    wmihlp32.dll    </td>   <td>    %system%\wbem   </td>   </tr>
+<tr>    <td>    dskapi.ocx      </td>   <td>    %system%        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    winshell.ocx    </td>   <td>    %system%        </td>   </tr>
+<tr>    <td>    devwiz.ocx      </td>   <td>    %system%        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    lanhlp32.ocx    </td>   <td>    %system%        </td>   </tr>
+<tr>    <td>    mcdmn.ocx       </td>   <td>    %system%        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    smdk.ocx        </td>   <td>    %system%        </td>   </tr>
+<tr>    <td>    windig.ocx      </td>   <td>    %system%        </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    system32.bin    </td>   <td>    root folder USB drive   </td>   </tr>
+<tr>    <td>    system32.dat    </td>   <td>    root folder USB drive   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    .CatRoot.tmp    </td>   <td>    root folder USB drive   </td>   </tr>
+<tr>    <th>    Data files and folders  </th>   <th>    Path    </th>   </tr>
+<tr>    <td>    ~shw.tmp        </td>   <td>    %temp%  </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    ~stm.tmp        </td>   <td>    %temp%  </td>   </tr>
+<tr>    <td>    ws1bin.dat      </td>   <td>    %windir%\Temp   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    ws1bin.dat      </td>   <td>    %temp%  </td>   </tr>
+<tr>    <td>    ~gdl.tmp        </td>   <td>    %temp%  </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    ~mdk.tmp        </td>   <td>    %temp%  </td>   </tr>
+<tr>    <td>    .thumbs.db      </td>   <td>    root folder USB drive   </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    wabdat.dat      </td>   <td>    %temp%  </td>   </tr>
+<tr>    <td>    desktop.ini     </td>   <td>    inside folders on USB drive     </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    target.lnk      </td>   <td>    inside folders on USB drive     </td>   </tr>
+<tr>    <td>    .Backup0[D-M]   </td>   <td>    directory on USB drive  </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    .Backup00[D-M]  </td>   <td>    directory on USB drive  </td>   </tr>
+<tr>    <td>    md.bak  </td>   <td>    %temp%  </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    s61cs3.dat      </td>   <td>    %systemroot%\Temp\      </td>   </tr>
+<tr>    <td>    s61cs3.dat      </td>   <td>    %temp%  </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    ~ZM6AD3.tmp     </td>   <td>    %windir%\temp   </td>   </tr>
+<tr>    <td>    browser.js      </td>   <td>    "%AppData%\Roaming\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}<br>
+%AppData%\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}
+"       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    browser.xul     </td>   <td>    "%AppData%\Roaming\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}<br>
+%AppData%\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}
+"       </td>   </tr>
+<tr>    <td>    fileio.js       </td>   <td>    "%AppData%\Roaming\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}<br>
+%AppData%\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}
+"       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    chrome.manifest </td>   <td>    "%AppData%\Roaming\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}<br>
+%AppData%\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}
+"       </td>   </tr>
+<tr>    <td>    lppd.dat        </td>   <td>    "%AppData%\Roaming\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}<br>
+%AppData%\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}
+"       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    install.rdf     </td>   <td>    "%AppData%\Roaming\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}<br>
+%AppData%\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}
+"       </td>   </tr>
+<tr>    <td>    rssf.dat        </td>   <td>    "%AppData%\Roaming\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}<br>
+%AppData%\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}
+"       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    lfm.dat </td>   <td>    "%AppData%\Roaming\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}<br>
+%AppData%\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}
+"       </td>   </tr>
+<tr>    <td>    mppd.dat        </td>   <td>    "%AppData%\Roaming\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}<br>
+%AppData%\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}
+"       </td>   </tr>
+<tr style="background:#f0f0f0;">        <td>    pddp.dat        </td>   <td>    "%AppData%\Roaming\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}<br>
+%AppData%\Mozilla\Firefox\Profiles\*\<br>{a288cad4-7b24-43f8-9f4d-8e156305a8bc}
+"       </td>   </tr>
+<tr>    <td>    pldnrfn.ttf     </td>   <td>    %SystemRoot%\fonts\     </td>   </tr>
+</table><br>                                                    
+         
+<h2><a name="16"></a>Conclusion</h2>
+
+<p>Gauss is the most recent development from the pool of cyber-espionage projects that includes Stuxnet, Flame and Duqu. It was most likely created in mid-2011 and deployed for the first time in August-September 2011. </p>
+<p>Its geographical distribution is unique; the majority of infections were found in Lebanon, Palestine and Israel. One of the modules from Jan 2012 contains the path 'c:\documents and settings\flamer\desktop\gauss_white_1'. The 'flamer' in the path above is the Windows username that compiled the project. Given the focus on Lebanon, the 'white' version identifier can probably be explained as following: 'the name Lebanon comes from the Semitic root LBN, meaning "white", likely a reference to the snow-capped Mount Lebanon.' (Wikipedia)</p>
+<p>Code references and encryption subroutines, together with the Command and Control infrastructure make us believe Gauss was created by the same 'factory' which produced Flame. This indicates it is most likely a nation-state sponsored operation.</p>
+<p>Between Gauss' functions, the 'Winshell.ocx' module which gives the name to the malware as 'Gauss', steals credentials required to access online banking accounts for several Lebanese banks - including the Bank of Beirut, Byblos Bank and Fransabank. This is the first publicly known nation-state sponsored banking Trojan.</p>
+<p>Another feature which makes Gauss unique is its encrypted payload, which we haven't been able to unlock. The payload is run by infected USB sticks and is designed to surgically target a certain system (or systems) which have a specific program installed. One can only speculate on the purpose of this mysterious payload.</p>
+<p>The discovery of Gauss indicates that there are probably many other related cyber-espionage malware in operation. The current tensions in the Middle East are just signs of the intensity of these ongoing cyber-war and cyber-espionage campaigns.</p> 
+
+<div class="quote"><p><a href="downloads/vlpdfs/kaspersky-lab-gauss.pdf"><img src="images/vlicons/pdf_small.gif" border=0 width=28 height=28 alt='' align=absmiddle></a>&nbsp;&nbsp;&nbsp;You can download PDF version of this article <a href="downloads/vlpdfs/kaspersky-lab-gauss.pdf">here</a>.</p></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a name='comments'></a>
+
+
+<div class="font1 mrb12">
+<br/>
+<p class="mTitle" KLMark="loc_msg:vl2comments_main">12 comments</p>
+
+<div class="fl cm_pd grn_bg" KLMark="loc_msg:sl_sort_down">Oldest first</div>
+<div class="fl cm_pd mrl8"><a href=analysis/204792238/Gauss_Abnormal_Distribution?desc=1#comments KLMark="loc_msg:sl_sort_up">Newest first</a></div>
+
+<div class="fr cm_pd grn_bg" KLMark="loc_msg:sl_view_tree">Threaded view</div>
+<div class="fr cm_pd mrr8"><a href=analysis/204792238/Gauss_Abnormal_Distribution?tree=0#comments KLMark="loc_msg:sl_view_list">Table view</a></div>
+<div class="cl h1px">&nbsp;</div>
+</div>
+
+<a name=c76214></a>
+
+<div class="cm_w_t"><div><div></div></div></div><table class="w100 cm_w_cr"><tr><td class="cm_w_cl cm_w_pd">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/20077" KLMark="vluser:20077">Donna J.Marn</a></p>
+<span class="date">2012 Aug 11, 21:38</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>0</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76214" KLMark="vlcomments:76214" style="padding-top:6px;">
+<p class="status">A War Conflict Name Change Person's Fraud Complaint</p>
+<p>Canadian Anti-Fraud Centre / Centre antifraude du Canada http://wp.me/p2mFyC-bQ via @wordpressdotcom <br><br>This is a Shame..A Real Shame.</p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76214#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</td></tr></table><div class="cm_w_b mrb12"><div><div></div></div></div>
+<a name=c76217></a>
+
+<div class="cm_w_brdb mrb12" style="padding:2px 24px 8px 0;margin-left:48px">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/29401" KLMark="vluser:29401">Michael_Mike</a></p>
+<span class="date">2012 Aug 14, 10:37</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>0</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76217" KLMark="vlcomments:76217" style="padding-top:6px;">
+<p class="status">Re: A War Conflict Name Change Person's Fraud Complaint</p>
+<p>Can you explain me the link between your post and Gauss virus? <br><br>BTW, if you need to report fraud in Canada: <br>-http://www.rcmp.gc.ca/scams-fraudes <br>-http://www.antifraudcentre-centreantifraude.ca/</p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76217#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</div>
+<a name=c76215></a>
+
+<div class="cm_w_t"><div><div></div></div></div><table class="w100 cm_w_cr"><tr><td class="cm_w_cl cm_w_pd">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/20077" KLMark="vluser:20077">Donna J.Marn</a></p>
+<span class="date">2012 Aug 11, 21:45</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>0</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76215" KLMark="vlcomments:76215" style="padding-top:6px;">
+<p class="status">Someone Is Controlling States Lottery Numbers,When this Happens</p>
+<p>“####….Someone is Racketeering The States Lottery”… <br><br>Posted on August 11, 2012 by 2012marandalaw <br>While analyzing the Flame malware that we detected in May 2012, Kaspersky Lab experts identified some distinguishing features of Flame’s modules. <br><br>via Gauss: Abnormal Distribution – Securelist#### <br><br>Canadian Anti-Fraud Centre / Centre antifraude du Canada http://wp.me/p2mFyC-bQ via @wordpressdotcom… <br><br>via Gauss: Abnormal Distribution – Securelist. <br><br></p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76215#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</td></tr></table><div class="cm_w_b mrb12"><div><div></div></div></div>
+<a name=c76218></a>
+
+<div class="cm_w_t"><div><div></div></div></div><table class="w100 cm_w_cr"><tr><td class="cm_w_cl cm_w_pd">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/29401" KLMark="vluser:29401">Michael_Mike</a></p>
+<span class="date">2012 Aug 14, 11:00</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>0</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76218" KLMark="vlcomments:76218" style="padding-top:6px;">
+<p class="status">Where is the download link? :)</p>
+<p>Great article. <br><br>This is a fascinating virus, I would contact you by email should I have the capability to help you, but I am just curious. <br><br>Few technical details have been said about how flame was creating collision (unless I missed them); will we get more details published when Gauss's payload get decrypted and analysed? <br><br>On a sidenote, I am deceived; deceived to not have an Euler module, or Galois (took 100years to understand the implication of his 'group theory'), Poincare, or Bourbaki. It seems that the creators had a different vision. <br><br>I hope that the payload is not multifunctional, a kind of polymorphism; that it can perform task X with key K, but also be part of task Y, by completing an unknown modules, with a different key (and using only part of it), or a specifically designed compression algorithm, or any combination. I believe that such completion, should it exist, properly implemented would make the virus even more unpredictable. <br><br>While I first speculated it was part of Stuxtnet at the time, do you think it's possible that Gauss can do this?</p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76218#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</td></tr></table><div class="cm_w_b mrb12"><div><div></div></div></div>
+<a name=c76251></a>
+
+<div class="cm_w_brdb mrb12" style="padding:2px 24px 8px 0;margin-left:48px">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/29401" KLMark="vluser:29401">Michael_Mike</a></p>
+<span class="date">2012 Aug 15, 02:16</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>0</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76251" KLMark="vlcomments:76251" style="padding-top:6px;">
+<p class="status"></p>
+<p>Ok, there is a blog from this morning that give me exactly the kind of information I was looking for. <br><br>https://www.securelist.com/en/blog/208193781/The_Mystery_of_the_Encrypted_G  auss_Payload <br><br>Thank you</p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76251#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</div>
+<a name=c76360></a>
+
+<div class="cm_w_brdb mrb12" style="padding:2px 24px 8px 0;margin-left:48px">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/29447" KLMark="vluser:29447">jas88</a></p>
+<span class="date">2012 Aug 17, 01:30</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>0</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76360" KLMark="vlcomments:76360" style="padding-top:6px;">
+<p class="status">Re: Where is the download link? :)</p>
+<p>&quot;I hope that the payload is not multifunctional, a kind of polymorphism; that it can perform task X with key K, but also be part of task Y, by completing an unknown modules, with a different key &quot; <br><br>Fortunately, that at least is virtually impossible in this case: it's using an MD5 hash for the key, and it's impossible for the virus author to choose those - so getting two different things that would hash to different values which are both valid RC4 keys for that ciphertext would be a huge leap. A variation of that approach might work, but not fit this particular system.</p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76360#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</div>
+<a name=c76223></a>
+
+<div class="cm_w_t"><div><div></div></div></div><table class="w100 cm_w_cr"><tr><td class="cm_w_cl cm_w_pd">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/28543" KLMark="vluser:28543">mikk0j</a></p>
+<span class="date">2012 Aug 14, 20:52</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>-1</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76223" KLMark="vlcomments:76223" style="padding-top:6px;">
+<p class="status">white</p>
+<p>White is code for release revision.</p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76223#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</td></tr></table><div class="cm_w_b mrb12"><div><div></div></div></div>
+<a name=c76226></a>
+
+<div class="cm_w_t"><div><div></div></div></div><table class="w100 cm_w_cr"><tr><td class="cm_w_cl cm_w_pd">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/29413" KLMark="vluser:29413">phlowbieuq</a></p>
+<span class="date">2012 Aug 14, 21:51</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>0</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76226" KLMark="vlcomments:76226" style="padding-top:6px;">
+<p class="status">If you move the N...</p>
+<p>Anyone else noticed that if you move the N in the font name, it becomes &quot;Palidan Arrow&quot;? Does that name mean anything to anyone? <br><br>I realize that Palidan should be spelled Paladin, but since &quot;Pali&quot; is a normal shorthand for Paladin, it's not a completely unbelievable mistake. Also Palida sounds more believable for a font name than Paladi. <br><br>Anyway, it could be nothing, but it also could be an intentional play on words by the authors...</p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76226#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</td></tr></table><div class="cm_w_b mrb12"><div><div></div></div></div>
+<a name=c76254></a>
+
+<div class="cm_w_brdb mrb12" style="padding:2px 24px 8px 0;margin-left:48px">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/29401" KLMark="vluser:29401">Michael_Mike</a></p>
+<span class="date">2012 Aug 15, 02:28</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>0</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76254" KLMark="vlcomments:76254" style="padding-top:6px;">
+<p class="status">It can be anything</p>
+<p>I consider this name the same as using initials value of 0x1234567, 0x89abcdef ... for the md5 algorithm, it can be a distraction. <br><br>Your suggestion is as probable as googling 'Palida' and picking up the cosmetics company http://palida.co.th and saying that it was made by a woman. The only thing that make it more probable than anything, because it can be anything, is a matter of psychology; like the Rorschach test, you see what you want to see. ;-)</p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76254#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</div>
+<a name=c76270></a>
+
+<div class="cm_w_t"><div><div></div></div></div><table class="w100 cm_w_cr"><tr><td class="cm_w_cl cm_w_pd">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/29433" KLMark="vluser:29433">pennywise87</a></p>
+<span class="date">2012 Aug 15, 07:06</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>0</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76270" KLMark="vlcomments:76270" style="padding-top:6px;">
+<p class="status">A little confused</p>
+<p>According to page 36 of the gauss pdf, the topic is the creation of Palida Narrow TTF font and installation of the font. It then goes on to say how the that purpose of this file is unknown. The attack vector of Duqu was to exploit the ttf parsing engine detailed in CVE-2011-3402. Is it possible that if the machine is patched for .LNK exploit, that it then tries to see if the system is patched for the ttf exploit? Maybe it creates the ttf just in-case the lnk exploit gets patched in the future on the infected systems. <br></p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76270#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</td></tr></table><div class="cm_w_b mrb12"><div><div></div></div></div>
+<a name=c76440></a>
+
+<div class="cm_w_t"><div><div></div></div></div><table class="w100 cm_w_cr"><tr><td class="cm_w_cl cm_w_pd">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/29794" KLMark="vluser:29794">rewgnda</a></p>
+<span class="date">2012 Sep 18, 15:29</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>0</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76440" KLMark="vlcomments:76440" style="padding-top:6px;">
+<p class="status">Another source names centOS as c c-server platform for Flame</p>
+<p>So do I have to worry about Debian-system-security ? <br>see: <br>http://www.heise.de/newsticker/meldung/Spionagetrojaner-Flame-gibt-Geheimnisse-preis-1709709.html</p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76440#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</td></tr></table><div class="cm_w_b mrb12"><div><div></div></div></div>
+<a name=c76441></a>
+
+<div class="cm_w_brdb mrb12" style="padding:2px 24px 8px 0;margin-left:48px">
+
+<div class="fl mrr8"><img  src="/images/newdesign2/no_avatar.gif " width="48px" alt=''/></div>
+<div class="fl">
+<p><a href="userinfo/29794" KLMark="vluser:29794">rewgnda</a></p>
+<span class="date">2012 Sep 18, 15:31</span>
+</div>
+<table class="fr font1" style="width:400px"><tr><td>
+
+
+<div class="fr rate_bg"><div>0</div></div>
+<div class="fr pdr12" style="padding-top:3px">
+&nbsp;
+</div>
+<div class="cl"></div>
+
+
+
+
+</td></tr></table>
+<div class="cl"></div>
+
+<!-- ///// comment -->
+<div id="post76441" KLMark="vlcomments:76441" style="padding-top:6px;">
+<p class="status">Re: Another source names centOS as c c-server platform for Flame</p>
+<p>Microsofts marketing-strategies are too aggressive, so are the malware-developers.</p>
+
+
+<div class="font1">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?replyto=76441#comments" KLMark="loc_msg:vl2comment_reply">Reply</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+<!-- ///// end comment -->
+</div>
+
+<a name=add></a>
+
+<div class="fl status" KLMark="loc_msg:vl2youmust">If you would like to comment on this article you must first</div>
+<div class="fl mrl8">
+<a href="login" class="dashed status" onclick="return Balloon_On('LoginFormDw')" KLMark="loc_msg:vl2authorize">login</a>
+<div class="abs" style="z-index:10"><div id="LoginFormDw" class="abs" style="display:none;left:-8;top:-9px">
+	<div id="fsel_w1">
+		<div class="ctop"></div>
+		<!-- div class="cntr"--><!-- errors for ie -->
+		<table class="w100"><tr><td class="cntr" style="padding-left:18px;padding-right:18px;">
+
+<form action="login" method="post">
+<input type="hidden" name="REFERER" value="analysis/204792238/Gauss_Abnormal_Distribution#add">
+
+<span KLMark="loc_msg:vl2login">Log-in</span><br/>
+<p><input type="text" maxlength=30 name="LOGIN" id="LOGIN" value="" class="w100"></p>
+<span KLMark="loc_msg:vl2pass">Password</span><br/>
+<p><input type="password" name="PASSWD" value="" class="w100"></p>
+<p><input type="checkbox" name="SAVE" class="mrr8"><span KLMark="loc_msg:vl2save">Remember me</span></p>
+<p><input type="submit" name="accept" KLMark="loc_msg:vl2accept" value="Log In" class="btn_gr"/></p>
+<br/>
+<p><a href="profile" KLMark="loc_msg:vl2register" class="under">Register</a></p>
+<p><a href="profile/password_recovery" class="under" KLMark="loc_msg:vl2recovery">Forgotten your password?</a></p>
+</form>
+		
+		</td></tr></table>
+		<!--/div-->
+		<div class="cbtm"></div>
+	</div>
+</div></div>
+</div>
+<div class="cl"></div>
+<br/>
+<br/>
+
+
+
+
+</div>
+
+<!-- right column -->
+<div class="fr rWidth2">
+
+<div class="fr pdl12 font1 c">
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?print_mode=1"><img src="images/newdesign2/itop_print.gif" alt=""/></a><br/>
+<a href="analysis/204792238/Gauss_Abnormal_Distribution?print_mode=1"><span KLMark="loc_msg:vlicon_print">Print</span></a>
+</div>
+<div class="fr pdl12 font1 c"><!-- AddThis Button BEGIN -->
+<script type="text/javascript">
+var addthis_config = {
+     ui_language: "en"
+};
+//	image: new Array('http://www.securelist.com/en/images/vlavatar/4/5/0f22a64f9498b7866afc9cb4437328','http://www.securelist.com/en/images/vlanalysis/sl_internal_infowatch_intro.jpg','http://www.securelist.com/en/images/vlicons/pdf_small.gif','http://www.securelist.com/en/images/vlill/great2012_pic01s.png','http://www.securelist.com/en/images/vlill/great2012_pic02.png','http://www.securelist.com/en/images/vlill/great2012_pic03.png','http://www.securelist.com/en/images/vlill/great2012_pic04s.png','http://www.securelist.com/en/images/vlill/great2012_pic05.png','http://www.securelist.com/en/images/newdesign3/logo_secur.gif'),
+var addthis_share = {image: "http://www.securelist.com/en/images/vlavatar/4/5/0f22a64f9498b7866afc9cb4437328", url: "http://www.securelist.com/en/analysis/204792238/Gauss_Abnormal_Distribution", description: "While analyzing the Flame malware that we detected in May 2012,  Kaspersky Lab experts identified some distinguishing features of Flame's modules. ", title: "Gauss: Abnormal Distribution" };
+
+
+</script>
+
+<a href="http://www.addthis.com/bookmark.php?v=250&pub=securelist" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="images/newdesign2/itop_add.gif" width="16" height="16" alt="Bookmark and Share" style="border:0"/></a><br/><a href="http://www.addthis.com/bookmark.php?v=250&pub=securelist" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()">Share</a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js?pub=securelist"></script>
+<!-- AddThis Button END -->
+</div>
+<div class="cl"></div>
+
+
+
+
+
+<!-- info author - left -->
+
+<p class="mTitle" KLMark="loc_msg:vl2about_s">Author</p>
+<div KLMark="vlauthor:198994037">
+<p>
+<a href="userinfo/2085"><img src="images/vlavatar/4/5/0f22a64f9498b7866afc9cb4437328" width="66px" height="66px" alt=""/></a>
+</p>
+<p class="status">
+<a href="userinfo/2085">Global Research & Analysis Team (GReAT), Kaspersky Lab</a>
+</p>
+<div class="li font1"><a href="analysis?author=198994037" KLMark="loc_msg:vl2towebstat">All analysis articles</a></div>
+<div class="li font1"><a href="weblog?author=2085" KLMark="loc_msg:vl2toweblog">All blog postings</a></div>
+<br/>
+</div>
+
+
+
+<div class="hr"></div>
+
+	<p class="status" KLMark="loc_msg:object_titles2">Analysis</p>
+		<div class="li"><a href="analysis/204792265/Red_October_Detailed_Malware_Description_1_First_Stage_of_Attack">&#8220;Red October&#8221;. Detailed Malware Description 1. First Stage of Attack </a></div>
+		<div class="li"><a href="analysis/204792268/Red_October_Detailed_Malware_Description_2_Second_Stage_of_Attack">&#8220;Red October&#8221;. Detailed Malware Description 2. Second Stage of Attack</a></div>
+		<div class="li"><a href="analysis/204792264/Red_October_Detailed_Malware_Description_3_Second_Stage_of_Attack">&#8220;Red October&#8221;. Detailed Malware Description 3. Second Stage of Attack</a></div>
+		<div class="li"><a href="analysis/204792273/Red_October_Detailed_Malware_Description_4_Second_Stage_of_Attack">&#8220;Red October&#8221;. Detailed Malware Description 4. Second Stage of Attack </a></div>
+		<div class="li"><a href="analysis/204792272/Red_October_Detailed_Malware_Description_5_Second_Stage_of_Attack">&#8220;Red October&#8221;. Detailed Malware Description 5. Second Stage of Attack </a></div>
+<div class="rzline"></div>
+	<p class="status" KLMark="loc_msg:object_titles2">Blog</p>
+		<div class="li"><a href="blog/208194092/Red_October_Indicators_of_compromise">Red October - Indicators of compromise</a></div>
+		<div class="li"><a href="blog/208194091/Red_October_part_two_the_modules">"Red October" - part two, the modules</a></div>
+		<div class="li"><a href="blog/208194086/Red_October_Java_Exploit_Delivery_Vector_Analysis">Red October - Java Exploit Delivery Vector Analysis</a></div>
+		<div class="li"><a href="blog/785/The_Red_October_Campaign_An_Advanced_Cyber_Espionage_Network_Targeting_Diplomatic_and_Government_Agencies">The "Red October" Campaign - An Advanced Cyber Espionage Network Targeting Diplomatic and Government Agencies</a></div>
+		<div class="li"><a href="blog/208194061/Hashcat_s_GPU_accelerated_Gauss_encryption_cracker">Hashcat's GPU-accelerated Gauss encryption cracker</a></div>
+<div class="rzline"></div>
+	<p class="status" KLMark="loc_msg:object_titles2">Source</p>
+		<div class="li"><a href="http://www.kaspersky.com">Kaspersky Lab</a></div>
+
+
+
+
+</div>
+
+<div class="cl"></div>
+
+
+
+		<!-- padd -->
+		<div class="h1px" style="height:24px"></div>
+	</div></div></div></div>
+
+
+	<!-- content - white bg -->
+	<div class="mrga"><div class="mrga mWidthB cc_bg"><div class="pd5"><div class="mWidth">
+		<!-- footer -->
+		<div class="footer">
+			<div class="pdl36 pdr36">
+				<div class="fl">
+					<p><a href="http://www.kaspersky.com/"><img src="images/newdesign3/logo_dwn.gif" alt=""/></a></p>
+					<p KLMark="loc_msg:vl2_copytext">&copy; 1997-2013 <a href="http://www.kaspersky.com">Kaspersky Lab ZAO</a>. All Rights Reserved.<br>
+Industry-leading Antivirus Software.<br>
+Registered trademarks and service marks are the property of their respective owners.<br>
+The authors' opinions do not necessarily reflect the official positions of Kaspersky Lab.</p>
+				</div>
+				<div class="fr" KLMark="loc_msg:vl2_link_kasp">
+					<a href="http://www.kaspersky.com" style="text-decoration:none"><h4>kaspersky.com</h4></a>
+<p><a href="http://www.kaspersky.com/products">Products</a></p>
+<p><a href="http://www.kaspersky.com/store">eStore</a></p>
+<p><a href="http://www.kaspersky.com/threats">Threats</a></p>
+<p><a href="http://www.kaspersky.com/downloads">Downloads</a></p>
+<p><a href="http://support.kaspersky.com/">Support</a></p>
+<p><a href="http://www.kaspersky.com/partners">Partners</a></p>
+<p><a href="http://www.kaspersky.com/about">About Us</a></p>
+<p><a href="http://www.kaspersky.com/search">Search</a></p></p>					
+				</div>
+				<div class="fr pdr36" KLMark="loc_msg:vl2_link_sec">
+					<a href="index.html" style="text-decoration:none"><h4>securelist.com</h4></a>
+<p><a href="threats">Threats</a></p>
+<p><a href="analysis">Analysis</a></p>
+<p><a href="blog">Blog</a></p>
+<p><a href="descriptions">Descriptions</a></p>
+<p><a href="glossary">Glossary</a></p>
+<p><a href="feeds">RSS feeds</a></p>
+<p><a href="contacts">Contacts</a></p>
+<p><a href="find">Search</a></p>
+				</div>
+				<div class="cl"></div>
+			</div>
+		</div>
+	</div></div></div></div>
+
+</div>
+
+<script language="JavaScript">
+function MarkHTML(url){
+  var tags = document.all;
+  if(document.body.KLEdit != null)	url = document.body.KLEdit;
+  u = url.split('/');
+  u[4] = 'edit.html?project=' + u[4] + '&site=vl' + '&mark=';
+  u = u.join('/'); u = u.substring(0, u.length - 1);
+  document.body.KLURL = u;
+  for(i=0; i<tags.length; i++){
+    if(tags(i)["KLMark"]){
+	tags(i).onclick = new Function("EdClick('" + tags(i)["KLMark"] + "')");
+    }
+  }
+}
+function EdClick(mark){
+  if(document.body.KLURL){
+     window.open().location = document.body.KLURL + mark;
+     event.cancelBubble = true;
+  }
+}
+document.body.KLProject = 'kaspen';
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15857463-1']);
+  _gaq.push(['_setDomainName', 'none']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_setAccount', 'UA-23399978-2']);
+  _gaq.push(['_setDomainName', 'none']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+
+<!-- ************************************************************************************ -->
+
+</html>
+
