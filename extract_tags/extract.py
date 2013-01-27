@@ -26,7 +26,7 @@ class UnknownTagError(Exception):
 def main():
     """
     Called when invoked from the command line. Parses tag and filename and calls
-    the extract_from_file function
+    the extract_tags_from_file function
     """
     timestamp_string = str(rfc3339(time.time()))
 
@@ -37,7 +37,7 @@ def main():
     (tag, filename) = sys.argv[1:3]
 
     try:
-        tags = extract_from_file(tag, filename)
+        tags = extract_tags_from_file(tag, filename)
     except UnknownTagError, e:
         print(e)
         usage()
@@ -60,7 +60,7 @@ def get_valid_tags():
     "Returns a list of strings for all supported tags."
     return tags.TAG_FORMATS.keys()
 
-def extract_from_file(tag, filename):
+def extract_tags_from_file(tag, filename):
     "Opens a file, reads its content and calls extract_tags"
     f = open(filename, 'r')
     matching_tags = extract_tags(tag, f.read())
