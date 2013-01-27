@@ -35,6 +35,18 @@ class ExtractIpv4Test(unittest.TestCase):
         self.do_extract([], '#192.168#')
         self.do_extract([], '#192#')
 
+class ExtractIpv6Test(unittest.TestCase):
+    def do_extract(self, expected, text, tag='ipv6'):
+        self.assertEqual(
+                {tag : expected},
+                extract_tags(tag, text))
+
+    def test_full_address(self):
+        self.maxDiff = None
+        self.do_extract(
+                ['fe80:0000:0000:0000:0204:61ff:fe9d:f156'], 
+                '#fe80:0000:0000:0000:0204:61ff:fe9d:f156#')
+
 class ExtractEmailTest(unittest.TestCase):
     def do_extract(self, expected, text, tag='email'):
         self.assertEqual(

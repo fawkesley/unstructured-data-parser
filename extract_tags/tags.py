@@ -21,15 +21,25 @@ from lib.domain_name import DomainName, InvalidUrlError
 
 TAG_FORMATS = {
         'ipv4'     : (
-            r'((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(?![\d])'),
-        'ipv6'     : r'',
+            r'((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}'
+            '(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(?![\d])'),
+
+        # http://splunk-base.splunk.com/answers/8435/ipv6-addresses-parsed-properly
+        'ipv6'     : (
+            r'([0-9a-f]{1,4}:[0-9a-f]{1,4}:[0-9a-f]{1,4}:[0-9a-f]{1,4}'
+            ':[0-9a-f]{1,4}:[0-9a-f]{1,4}:[0-9a-f]{1,4}:[0-9a-f]{1,4})'),
+
         'url'      : r'(?:http|https)(?::\/{2}[\w]+)(?:[\/|\.]?)(?:[^\s"]*)',
         # extract as URL then convert to host/domain name
         'hostname' : r'(?:http|https)(?::\/{2}[\w]+)(?:[\/|\.]?)(?:[^\s"]*)',
         'domain'   : r'(?:http|https)(?::\/{2}[\w]+)(?:[\/|\.]?)(?:[^\s"]*)',
+        
         'md5'      : r'\b[a-f\d]{32}\b',
+        
         'sha1'     : r'\b[a-f\d]{40}\b',
+        
         'sha256'   : r'\b[a-f\d]{64}\b',
+        
         'email'    : r'[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}',
         }
 
