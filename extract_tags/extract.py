@@ -16,7 +16,6 @@ import sys
 import re
 import time
 from lib.rfc3339 import rfc3339
-from lib.domain_name import DomainName, InvalidUrlError
 
 import tags
 
