@@ -58,21 +58,6 @@ class ExtractIpv6Test(unittest.TestCase):
                 ['fe80::204:61ff:fe9d:f156'], 
                 '#fe80::204:61ff:fe9d:f156#')
 
-    def _test_ipv4_dotted_quad(self):
-        self.do_extract(
-                ['fe80:0000:0000:0000:0204:61ff:254.157.241.86'], 
-                '#fe80:0000:0000:0000:0204:61ff:254.157.241.86#')
-
-    def _test_drop_leading_zeroes_ipv4_dotted_quad(self):
-        self.do_extract(
-                ['fe80:0:0:0:0204:61ff:254.157.241.86'], 
-                '#fe80:0:0:0:0204:61ff:254.157.241.86#')
-
-    def _test_collapse_multiple_zeroes_ipv4_dotted_quad(self):
-        self.do_extract(
-                ['fe80::204:61ff:254.157.241.86'], 
-                '#fe80::204:61ff:254.157.241.86#')
-
     def test_localhost(self):
         self.do_extract(
                 ['::1'], 
@@ -167,9 +152,6 @@ class ExtractHostnameTest(unittest.TestCase):
         self.do_extract(
                 ['sub1.sub2.domain.com'],
                 'http://sub1.sub2.domain.com/foo')
-
-    def test_internationalized_domain(self):
-        pass
 
 if __name__ == '__main__':
     unittest.main()
