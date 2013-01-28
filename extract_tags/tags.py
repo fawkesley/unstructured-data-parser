@@ -84,6 +84,17 @@ TAG_FORMATS = {
         'sha256'   : r'\b[a-f\d]{64}\b',
         }
 
+def postfilter_hostname(hostname):
+    """
+    The 'hostname' regular expression can catch hostnames with a leading dot.
+    The tldextract library allows us to clean them up.
+
+    >>> postfilter_hostname('.google.com')
+    'google.com'
+    """
+    domain = extract(hostname)
+    return '.'.join(filter(None, (domain.subdomain, domain.domain, domain.tld)))
+
 def postfilter_domain(hostname):
     """
     The 'domain' regular expression catches an entire hostname. We use the
