@@ -131,6 +131,9 @@ class ExtractUrlTest(unittest.TestCase):
     def test_http_url(self):
         self.do_extract(['http://www.example.com'], '#http://www.example.com  ')
 
+    def test_ftp_url(self):
+        self.do_extract(['ftp://www.example.com'], '#ftp://www.example.com  ')
+
 
 class ExtractBaseDomainTest(unittest.TestCase):
     def do_extract(self, expected, text, tag='domain'):
