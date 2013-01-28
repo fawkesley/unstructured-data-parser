@@ -34,3 +34,26 @@ etc...
 Inspirations/links:
 https://github.com/stephenbrannon/IOCextractor/blob/master/IOCextractor.py
 http://tools.ietf.org/html/rfc3339 
+
+Initial review feedback:
+
+With tag I meant something that can be used to store for example the name of a
+project, not the data type to be extracted. Sorry if I did not make that clear.
+So I would like to get extraction in one go of all the data types.
+
+The libraries are totaly fine, but the domain library does not support IDN
+(Internationalized Domain Names). Take the regexp from IOCextractor as a good
+source or you can use TLDextract library -
+https://github.com/john-kurkowski/tldextract
+
+For Hostname and Domain regexp, please dont specify protocol handlers
+(http/https) since there could be any or none specified.
+
+For the Email and Url, regexp, please try to reuse the hostname regexp.
+
+For the IPv6, please use http://forums.intermapper.com/viewtopic.php?t=452
+instead which allows all the different types of IPv6 address formats that are
+also listed in that post.
+
+For hashes (MD5/sha1/sha256), please add support for mixed case hashes
+(ABcDeF0128)
