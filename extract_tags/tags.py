@@ -16,7 +16,7 @@
 # Unit tests live in tests.py, I'd recommend adding to these as you make
 # changes.
 
-from lib.domain_name import DomainName, InvalidUrlError
+from lib.tldextract import extract
 
 _TLD_GROUP = (
         r'(XN--CLCHC0EA0B2G2A9GCD|XN--HGBK6AJ7F53BBA|XN--HLCJ6AYA9ESC7A|'
@@ -87,15 +87,11 @@ TAG_FORMATS = {
 def postfilter_domain(hostname):
     """
     The 'domain' regular expression catches an entire hostname. We use the
-    DomainName class to extract the root domain (strip off subdomains).
+    tldextract.extract function to extract the root domain (strip subdomains).
 
     >>> postfilter_domain('sub1.google.com')
     'google.com'
     """
-    try:
-        d = DomainName(hostname)
-        return d.root_domain()
-    except InvalidUrlError:
-        return None
-
+    domain = extract(hostname)
+    return "%s.%s" % (domain.domain, domain.tld)
 
