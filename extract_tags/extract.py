@@ -27,16 +27,15 @@ def main():
     Called when invoked from the command line. Parses tag and filename and calls
     the extract_tags_from_file function
     """
-    timestamp_string = str(rfc3339(time.time()))
 
     if len(sys.argv) < 3:
         usage()
         sys.exit(1)
     
-    (tag, filename) = sys.argv[1:3]
+    (report_name, filename) = sys.argv[1:3]
 
     try:
-        tags = extract_tags_from_file(tag, filename)
+        matching_tags = extract_tags_from_file(filename)
     except UnknownTagError, e:
         print(e)
         usage()
@@ -46,38 +45,47 @@ def main():
         usage()
         sys.exit(3)
 
-    for tag, matches in tags.items():
-        for match in matches:
-            print("tag;%s;%s;\"%s\"" % (
-                timestamp_string, tag, match))
+    print(create_string_output(matching_tags, report_name))
 
 def usage():
-    print("\nUsage: %s <tag> <filename>" % sys.argv[0])
-    print("\nValid tags are: %s" % ','.join(get_valid_tags()))
+    print("\nUsage: %s <report name> <report filename>\n" % sys.argv[0])
 
 def get_valid_tags():
     "Returns a list of strings for all supported tags."
     return tags.TAG_FORMATS.keys()
 
-def extract_tags_from_file(tag, filename):
+def create_string_output(matching_tags, report_name, report_time=time.time()):
+    out = ''
+    timestamp_string = str(rfc3339(time.time()))
+    for tag, matches in matching_tags.items():
+        for match in matches:
+            out += "%s;%s;%s;\"%s\"\n" % (
+                report_name, timestamp_string, tag, match)
+    return out
+
+def extract_tags_from_file(filename):
     "Opens a file, reads its content and calls extract_tags"
     f = open(filename, 'r')
-    matching_tags = extract_tags(tag, f.read())
+    matching_tags = extract_tags(f.read())
     f.close()
     return matching_tags
 
-def extract_tags(tag, text):
+def extract_tags(text):
     """
     Searches in the string text for non-overlapping instances of the tag
     specified. Returns a dictionary of tag name to a list of matches.
     
-    >>> extract_tags('ipv4', 'some text with an IP 192.168.0.1')
-    {'ipv4': ['192.168.0.1']}
+    >>> extract_tags('some text http://www.google.co.uk and IP 192.168.0.1')
+    {'url': ['http://www.google.co.uk'], 'domain': ['google.co.uk'], 'hostname': ['www.google.co.uk'], 'ipv4': ['192.168.0.1']}
     """
-    
-    re = get_re_object(tag)
-    matches = map(detuple, re.findall(text))
-    return {tag : apply_postfilter(tag, matches)}
+    matching_tags = {}
+    for tag in get_valid_tags():
+        compiled_re = get_re_object(tag)
+        matches = map(detuple, compiled_re.findall(text))
+        if matches:
+            matching_tags[tag] = apply_postfilter(tag, matches)
+
+    return matching_tags
 
 def detuple(value):
     """
