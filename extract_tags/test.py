@@ -15,8 +15,8 @@ from extract import extract_tags
 class ExtractIpv4Test(unittest.TestCase):
     def do_extract(self, expected, text, tag='ipv4'):
         self.assertEqual(
-                {tag : expected},
-                extract_tags(tag, text))
+                expected,
+                extract_tags(text).get(tag, []))
 
     def test_all_zeroes(self):
         self.do_extract(['0.0.0.0'], '#0.0.0.0#')
@@ -39,8 +39,8 @@ class ExtractIpv4Test(unittest.TestCase):
 class ExtractIpv6Test(unittest.TestCase):
     def do_extract(self, expected, text, tag='ipv6'):
         self.assertEqual(
-                {tag : expected},
-                extract_tags(tag, text))
+                expected,
+                extract_tags(text).get(tag, []))
 
     def test_full_address(self):
         self.maxDiff = None
@@ -91,8 +91,8 @@ class ExtractIpv6Test(unittest.TestCase):
 class ExtractEmailTest(unittest.TestCase):
     def do_extract(self, expected, text, tag='email'):
         self.assertEqual(
-                {tag : expected},
-                extract_tags(tag, text))
+                expected,
+                extract_tags(text).get(tag, []))
 
     def test_plain_email(self):
         self.do_extract(['test@test.com'], '#test@test.com#')
@@ -100,8 +100,8 @@ class ExtractEmailTest(unittest.TestCase):
 class ExtractMd5Test(unittest.TestCase):
     def do_extract(self, expected, text, tag='md5'):
         self.assertEqual(
-                {tag : expected},
-                extract_tags(tag, text))
+                expected,
+                extract_tags(text).get(tag, []))
 
     def test_plain_md5(self):
         self.do_extract(
@@ -126,8 +126,8 @@ class ExtractMd5Test(unittest.TestCase):
 class ExtractUrlTest(unittest.TestCase):
     def do_extract(self, expected, text, tag='url'):
         self.assertEqual(
-                {tag : expected},
-                extract_tags(tag, text))
+                expected,
+                extract_tags(text).get(tag, []))
 
     def test_http_url(self):
         self.do_extract(['http://www.example.com'], '#http://www.example.com  ')
@@ -139,8 +139,8 @@ class ExtractUrlTest(unittest.TestCase):
 class ExtractBaseDomainTest(unittest.TestCase):
     def do_extract(self, expected, text, tag='domain'):
         self.assertEqual(
-                {tag : expected},
-                extract_tags(tag, text))
+                expected,
+                extract_tags(text).get(tag, []))
 
     def test_dot_com(self):
         self.do_extract(['domain.com'], 'http://sub.domain.com/foo')
@@ -154,8 +154,8 @@ class ExtractBaseDomainTest(unittest.TestCase):
 class ExtractHostnameTest(unittest.TestCase):
     def do_extract(self, expected, text, tag='hostname'):
         self.assertEqual(
-                {tag : expected},
-                extract_tags(tag, text))
+                expected,
+                extract_tags(text).get(tag, []))
 
     def test_dot_com(self):
         self.do_extract(['sub.domain.com'], 'http://sub.domain.com/foo')
