@@ -46,6 +46,46 @@ class ExtractIpv6Test(unittest.TestCase):
         self.do_extract(
                 ['fe80:0000:0000:0000:0204:61ff:fe9d:f156'], 
                 '#fe80:0000:0000:0000:0204:61ff:fe9d:f156#')
+    
+    def test_drop_leading_zeroes(self):
+        self.do_extract(
+                ['fe80:0:0:0:204:61ff:fe9d:f156'], 
+                '#fe80:0:0:0:204:61ff:fe9d:f156#')
+
+    def test_collapse_multiple_zeroes(self):
+        self.do_extract(
+                ['fe80::204:61ff:fe9d:f156'], 
+                '#fe80::204:61ff:fe9d:f156#')
+
+    def test_ipv4_dotted_quad(self):
+        self.do_extract(
+                ['fe80:0000:0000:0000:0204:61ff:254.157.241.86'], 
+                '#fe80:0000:0000:0000:0204:61ff:254.157.241.86#')
+
+    def test_drop_leading_zeroes_ipv4_dotted_quad(self):
+        self.do_extract(
+                ['fe80:0:0:0:0204:61ff:254.157.241.86'], 
+                '#fe80:0:0:0:0204:61ff:254.157.241.86#')
+
+    def test_collapse_multiple_zeroes_ipv4_dotted_quad(self):
+        self.do_extract(
+                ['fe80::204:61ff:254.157.241.86'], 
+                '#fe80::204:61ff:254.157.241.86#')
+
+    def test_localhost(self):
+        self.do_extract(
+                ['::1'], 
+                '#::1#')
+    
+    def test_link_local_prefix(self):
+        self.do_extract(
+                ['fe80::'], 
+                '#fe80::#')
+
+    def test_global_unicast_prefix(self):
+        self.do_extract(
+                ['2001::'], 
+                '#2001::#')
 
 class ExtractEmailTest(unittest.TestCase):
     def do_extract(self, expected, text, tag='email'):
