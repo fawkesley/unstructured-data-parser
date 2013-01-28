@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 """"
 Unit tests live in here to ensure that our regular expressions and postfilter
@@ -166,6 +167,11 @@ class ExtractHostnameTest(unittest.TestCase):
         self.do_extract(
                 ['sub1.sub2.domain.com'],
                 'http://sub1.sub2.domain.com/foo')
+
+    def test_internationalized_domain(self):
+        self.do_extract(
+                ['www.功功.jp'],
+                'www.功功.jp')
 
 
 if __name__ == '__main__':
