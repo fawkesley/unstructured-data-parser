@@ -76,7 +76,18 @@ def extract_tags(tag, text):
     """
     
     re = get_re_object(tag)
-    return {tag : apply_postfilter(tag, re.findall(text))}
+    matches = map(detuple, re.findall(text))
+    return {tag : apply_postfilter(tag, matches)}
+
+def detuple(value):
+    """
+    Return the first value in a tuple, or the value itself if not a tuple.
+    >>> detuple(('foo', 'bar'))
+    'foo'
+    >>> detuple('foo')
+    'foo'
+    """
+    return value[0] if isinstance(value, tuple) else value
 
 def apply_postfilter(tag, values):
     """
