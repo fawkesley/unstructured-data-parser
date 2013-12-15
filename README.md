@@ -1,6 +1,21 @@
+# Background
+
+This was a piece of client work to extract various fields of information from text-based malware reports.
+
+# Quickstart
+To get started, change into the extract_tags/ directory and run the following
+command:
+
+```
+$ python extract.py gauss ../examples/example3-gauss.html
+```
+
+Also have a look at import_demo.py for an indication of how to use the
+extractor as a module.
 Parse unstructured text to extract various bits of information
 
-Goal:
+# Original Client Brief
+
 Extract various bits of data from malware reports.
 Must be an importable python library and a command-line tool.
 Should not have too many dependencies.  Must be able to extract IPv4 addresses,
@@ -21,6 +36,7 @@ The output will contain the timestamp in RFC3339 format
 (1996-12-19T16:39:57-08:00) of the time when the program was invoked.
 
 Output must in the format:
+```
 tag;1996-12-19T16:39:57-08:00;ipv4;"1.1.1.1"
 tag;1996-12-19T16:39:57-08:00;ipv6;"fe80::200:5aee:feaa:20a2"
 tag;1996-12-19T16:39:57-08:00;md5;"545cb268267609910e1312399406cdbc"
@@ -29,13 +45,14 @@ tag;1996-12-19T16:39:57-08:00;hostname;"calendar.google.com"
 tag;1996-12-19T16:39:57-08:00;domain;"google.com"
 tag;1996-12-19T16:39:57-08:00;email;"  [obscured]  "
 tag;1996-12-19T16:39:57-08:00;url;"http://www.google.com";
+```
 etc...
 
 Inspirations/links:
-https://github.com/stephenbrannon/IOCextractor/blob/master/IOCextractor.py
-http://tools.ietf.org/html/rfc3339 
+[https://github.com/stephenbrannon/IOCextractor/blob/master/IOCextractor.py](https://github.com/stephenbrannon/IOCextractor/blob/master/IOCextractor.py)
+[http://tools.ietf.org/html/rfc3339](http://tools.ietf.org/html/rfc3339)
 
-Initial review feedback:
+## First Iteration Feedback
 
 With tag I meant something that can be used to store for example the name of a
 project, not the data type to be extracted. Sorry if I did not make that clear.
